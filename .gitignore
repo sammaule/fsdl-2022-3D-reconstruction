@@ -1,0 +1,8 @@
+# For this project
+HorizonNet/data/*
+logs
+HorizonNet_sc/ckpt/*
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
