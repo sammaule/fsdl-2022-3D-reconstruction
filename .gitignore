@@ -1,5 +1,5 @@
 # For this project
-HorizonNet/data/*
+HorizonNet_sc/data/*
 logs
 HorizonNet_sc/ckpt/*
 
