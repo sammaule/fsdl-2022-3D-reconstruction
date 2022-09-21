@@ -5,7 +5,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torchvision.models as models
 import functools
-from typing import List
+
 
 ENCODER_RESNET = [
     "resnet18",
@@ -58,9 +58,7 @@ class Resnet(nn.Module):
         super(Resnet, self).__init__()
         assert backbone in ENCODER_RESNET
         self.encoder = getattr(models, backbone)(pretrained=pretrained)
-        # del self.encoder.fc, self.encoder.avgpool
-        self.encoder.fc = nn.Sequential()
-        self.encoder.avgpool = nn.Sequential()
+        del self.encoder.fc, self.encoder.avgpool
 
     def forward(self, x):
         features = []
@@ -146,7 +144,7 @@ class GlobalHeightConv(nn.Module):
             ConvCompressH(in_c // 4, out_c),
         )
 
-    def forward(self, x, out_w: int):
+    def forward(self, x, out_w):
         x = self.layer(x)
 
         assert out_w % x.shape[3] == 0
@@ -154,7 +152,7 @@ class GlobalHeightConv(nn.Module):
         x = torch.cat([x[..., -1:], x, x[..., :1]], 3)
         x = F.interpolate(
             x,
-            size=[x.shape[2], out_w + 2 * factor],
+            size=(x.shape[2], out_w + 2 * factor),
             mode="bilinear",
             align_corners=False,
         )
@@ -177,20 +175,16 @@ class GlobalHeightStage(nn.Module):
             ]
         )
 
-    def forward(self, conv_list: List[torch.Tensor], out_w: int):
+    def forward(self, conv_list, out_w):
         assert len(conv_list) == 4
         bs = conv_list[0].shape[0]
-        features_list = []
-        for i, f in enumerate(self.ghc_lst):
-            x = conv_list[i]
-            features_list.append(f(x, out_w).reshape(bs, -1, out_w))
-        feature = torch.cat(features_list, dim=1)
-        """
-        feature = torch.cat([
-            f(x, out_w).reshape(bs, -1, out_w)
-            for f, x, out_c in zip(self.ghc_lst, conv_list, self.cs)
-        ], dim=1)
-        """
+        feature = torch.cat(
+            [
+                f(x, out_w).reshape(bs, -1, out_w)
+                for f, x, out_c in zip(self.ghc_lst, conv_list, self.cs)
+            ],
+            dim=1,
+        )
         return feature
 
 
@@ -200,10 +194,8 @@ HorizonNet
 
 
 class HorizonNet(nn.Module):
-    """
     x_mean = torch.FloatTensor(np.array([0.485, 0.456, 0.406])[None, :, None, None])
     x_std = torch.FloatTensor(np.array([0.229, 0.224, 0.225])[None, :, None, None])
-    """
 
     def __init__(self, backbone, use_rnn):
         super(HorizonNet, self).__init__()
@@ -261,14 +253,6 @@ class HorizonNet(nn.Module):
             self.linear[-1].bias.data[2 * self.step_cols : 3 * self.step_cols].fill_(
                 0.425
             )
-
-        self.x_mean = torch.FloatTensor(
-            np.array([0.485, 0.456, 0.406])[None, :, None, None]
-        )
-        self.x_std = torch.FloatTensor(
-            np.array([0.229, 0.224, 0.225])[None, :, None, None]
-        )
-
         self.x_mean.requires_grad = False
         self.x_std.requires_grad = False
         wrap_lr_pad(self)
