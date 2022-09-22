@@ -2,6 +2,7 @@
 HorizonNet_sc/data/*
 logs
 HorizonNet_sc/ckpt/*
+training/*.pt
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

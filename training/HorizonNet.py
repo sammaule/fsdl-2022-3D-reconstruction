@@ -2,8 +2,7 @@
 
 Example usage as a script:
 
-  python training/HorizonNet.py /
-    HorizonNet_sc/assets/preprocessed/demo_aligned_line.png
+  python training/HorizonNet.py HorizonNet_sc/assets/preprocessed/demo_aligned_line.png
 
 """
 import argparse
@@ -68,10 +67,10 @@ class horizonNet:
             img_pil = img_pil.resize((1024, 512), Image.BICUBIC)
         img_ori = np.array(img_pil)[..., :3].transpose([2, 0, 1]).copy()
         x = torch.FloatTensor([img_ori / 255])
-        x, aug_type = augment(x, False, [])
+        # x, aug_type = augment(x, False, [])
         y_bon_, y_cor_ = self.model(x)
-        y_bon_ = augment_undo(y_bon_.cpu(), aug_type).mean(0)
-        y_cor_ = augment_undo(torch.sigmoid(y_cor_).cpu(), aug_type).mean(0)
+        # y_bon_ = augment_undo(y_bon_.cpu(), aug_type).mean(0)
+        # y_cor_ = augment_undo(torch.sigmoid(y_cor_).cpu(), aug_type).mean(0)
         return y_bon_, y_cor_
 
 

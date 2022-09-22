@@ -84,11 +84,11 @@ def inference(
     H, W = tuple(x.shape[2:])
 
     # Network feedforward (with testing augmentation)
-    x, aug_type = augment(x, flip, rotate)
+    # x, aug_type = augment(x, flip, rotate)
     y_bon_, y_cor_ = net(x)  # .to(device))
-    y_bon_ = augment_undo(y_bon_.cpu(), aug_type).mean(0)
-    y_cor_ = augment_undo(torch.sigmoid(y_cor_).cpu(), aug_type).mean(0)
-
+    # y_bon_ = augment_undo(y_bon_.cpu(), aug_type).mean(0)
+    # y_cor_ = augment_undo(torch.sigmoid(y_cor_).cpu(), aug_type).mean(0)
+    print(y_bon_, y_cor_)
     # Visualize raw model output
     if visualize:
         vis_out = visualize_a_data(
