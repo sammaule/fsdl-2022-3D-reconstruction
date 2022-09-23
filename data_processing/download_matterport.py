@@ -3,13 +3,14 @@
 # Run with ./download_mp.py (or python download_mp.py on Windows)
 # -*- coding: utf-8 -*-
 import argparse
-import collections
 import os
 import tempfile
+from pathlib import Path
 
 # import urllib
 import urllib.request
-
+import zipfile
+import shutil
 
 BASE_URL = "http://kaldir.vc.in.tum.de/matterport/"
 RELEASE = "v1/scans"
@@ -73,10 +74,13 @@ def get_release_scans(release_file):
 
 def download_release(release_scans, out_dir, file_types):
     print("Downloading MP release to " + out_dir + "...")
+    all_scenes_files = []
     for scan_id in release_scans:
         scan_out_dir = os.path.join(out_dir, scan_id)
-        download_scan(scan_id, scan_out_dir, file_types)
+        files_downloaded = download_scan(scan_id, scan_out_dir, file_types)
+        all_scenes_files.extend(files_downloaded)
     print("Downloaded MP release.")
+    return all_scenes_files
 
 
 def download_file(url, out_file):
@@ -94,13 +98,16 @@ def download_file(url, out_file):
 
 def download_scan(scan_id, out_dir, file_types):
     print("Downloading MP scan " + scan_id + " ...")
+    files_downloaded = []
     if not os.path.isdir(out_dir):
         os.makedirs(out_dir)
     for ft in file_types:
         url = BASE_URL + RELEASE + "/" + scan_id + "/" + ft + ".zip"
         out_file = out_dir + "/" + ft + ".zip"
         download_file(url, out_file)
+        files_downloaded.append(out_file)
     print("Downloaded scan " + scan_id)
+    return files_downloaded
 
 
 def download_task_data(task_data, out_dir):
@@ -190,26 +197,41 @@ def main():
             print("ERROR: Invalid scan id: " + scan_id)
         else:
             out_dir = os.path.join(args.out_dir, RELEASE, scan_id)
-            download_scan(scan_id, out_dir, file_types)
-    elif (
-        "minos" not in args.task_data and args.id == "ALL" or args.id == "all"
-    ):  # download entire release
-        if len(file_types) == len(FILETYPES):
-            print(
-                "WARNING: You are downloading the entire MP release which requires "
-                + RELEASE_SIZE
-                + " of space."
-            )
-        else:
-            print("WARNING: You are downloading all MP scans of type " + file_types[0])
-        print(
-            "Note that existing scan directories will be skipped. Delete partially downloaded directories to re-download."
-        )
-        print("***")
-        print("Press any key to continue, or CTRL-C to exit.")
-        # key = raw_input('')
-        out_dir = os.path.join(args.out_dir, RELEASE)
-        download_release(release_scans, out_dir, file_types)
+            all_files_downloaded = download_scan(scan_id, out_dir, file_types)
+            print("files", all_files_downloaded)
+
+            # unzips the data
+            for zip_file in all_files_downloaded:
+                unzip_file = zip_file.replace(".zip", "")
+                with zipfile.ZipFile(zip_file, "r") as zip_ref:
+                    zip_ref.extractall(unzip_file)
+
+                all_files = os.listdir(
+                    unzip_file + "/{}/matterport_skybox_images".format(scan_id)
+                )
+                rooms_ids = list(set([file.split("_")[0] for file in all_files]))
+                for room_id in rooms_ids:
+                    room_files = [file for file in all_files if room_id in file]
+                    index_room = rooms_ids.index(room_id)
+                    os.makedirs(
+                        unzip_file
+                        + "/{}/matterport_skybox_images/room_{}".format(
+                            scan_id, index_room
+                        ),
+                        exist_ok=True,
+                    )
+                    for file in room_files:
+                        src_path = (
+                            unzip_file
+                            + "/{}/matterport_skybox_images/{}".format(scan_id, file)
+                        )
+                        dst_path = (
+                            unzip_file
+                            + "/{}/matterport_skybox_images/room_{}/{}".format(
+                                scan_id, index_room, file
+                            )
+                        )
+                        shutil.move(src_path, dst_path)
 
 
 if __name__ == "__main__":

@@ -1,2 +1,2 @@
 #!/bin/sh
-python3 data_processing/skybox_grid.py
+python3 data_processing/skybox_grid.py --id $1
