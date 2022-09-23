@@ -4,7 +4,7 @@ name: Push to AWS ECR
 on:
   push:
     branches:
-      - 5-set-up-github-action-to-automate-docker-image-deployment
+      - main
 
 env:
   AWS_REGION: eu-west-2
