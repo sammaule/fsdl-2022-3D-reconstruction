@@ -2,3 +2,17 @@
 black
 pre-commit
 wincertstore
+py360convert
+Pillow
+jupyter
+rootpath
+pylsd-nova
+open3d
+plotly
+opencv-python
+matplotlib
+shapely
+torch
+torchvision
+nbformat
+ipykernel

@@ -1,0 +1,16 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+data/
+tmp/
+*.jpg
+*.png
+.DS_Store
+assets/3d_files
+assets/inferenced
+assets/preprocessed
+assets/rooms_processed
+notebooks/*.html
+*/*.ipynb_checkpoints
+ckpt
