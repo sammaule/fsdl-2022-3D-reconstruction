@@ -9,6 +9,7 @@ on:
 env:
   AWS_REGION: eu-west-2
   ECR_REPOSITORY: fsdl-3drecon-api           # set this to your Amazon ECR repository name
+  LAMBDA_NAME: 3drecon-api
 
 jobs:
   deploy:
@@ -43,3 +44,12 @@ jobs:
           docker build -f model/Dockerfile -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+
+      - name: Update Lambda function with latest ECR image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          IMAGE_TAG: latest
+        run:
+          aws lambda update-function-code \
+          --function-name $LAMBDA_NAME \
+          --image-uri $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
