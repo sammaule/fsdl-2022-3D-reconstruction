@@ -20,6 +20,3 @@ jobs:
 
     - name: Build docker images
       run: docker-compose build
-
-    - name: Run tests
-      run: docker-compose run test
