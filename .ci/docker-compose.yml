@@ -3,4 +3,4 @@ services:
   api:
     build:
       context: ..
-      dockerfile: ../model/Dockerfile
+      dockerfile: model/Dockerfile
