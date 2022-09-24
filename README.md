@@ -1,12 +1,12 @@
 # :house: 3D reconstruction from panoramas (FSDL :pancakes: 2022)
 
-## About 
+## About
 
 This repository contains code for a web app which creates 3D reconstructions of rooms from 2D panorama photos. The web app can be accessed HERE, where users can upload panorama images of a room. These images will be passed to a deployment of the [HorizonNet](https://sunset1995.github.io/HorizonNet/) model and will return a 3D reconstruction of the room.
 
 ## Architecture
 
-![image](deployment_architecture.jpeg)
+![image](images/deployment_architecture.jpeg)
 
 ## :wrench: Developer setup
 
