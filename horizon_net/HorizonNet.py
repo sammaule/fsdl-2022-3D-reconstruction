@@ -1,18 +1,21 @@
-"""Output a prediction dictionary from an aligned panorama image
+"""Load a torchscript model and return a prediction dictionary from an aligned panorama image
+
 The output is similar to the dictionary in the file
-HorizonNet_sc\assets\inferenced\demo_aligned_rgb.json
+  assets\inferenced\demo_aligned_rgb.json
+
 The dictionary, together with the aligned image could be used to generate
 a 3D layout, by using the layout_viewer.py file
 
 Example usage as a script:
-  python HorizonNet.py ../HorizonNet_sc/assets/preprocessed/demo_aligned_line.png
 
+  cd horizon_net
+  python HorizonNet.py assets/preprocessed/demo_aligned_rgb.png
+
+For testing, when called directly, the module will also return a .json file specified
+in OUTPUT_FILE
 """
-import os
 import sys
 import json
-
-sys.path.append("..")
 import argparse
 from pathlib import Path
 import numpy as np
@@ -20,10 +23,12 @@ from PIL import Image
 import torch
 from scipy.ndimage.filters import maximum_filter
 from shapely.geometry import Polygon
-from HorizonNet_sc.misc import post_proc
+from misc import post_proc
 
 STAGED_MODEL_DIRNAME = Path(__file__).resolve().parent
+IMAGE_DIRNAME = Path(__file__).resolve().parent
 MODEL_FILE = "horizonNet.pt"
+OUTPUT_FILE = "assets/inferenced/torchscript_test.json"
 
 
 def find_N_peaks(signal, r=29, min_v=0.05, N=None):
@@ -87,6 +92,7 @@ class horizonNet:
             img_pil = img_pil.resize((1024, 512), Image.BICUBIC)
         img_ori = np.array(img_pil)[..., :3].transpose([2, 0, 1]).copy()
         x = torch.FloatTensor([img_ori / 255])
+
         H, W = tuple(x.shape[2:])
 
         x, aug_type = augment(x, False, [])
@@ -160,10 +166,8 @@ def main():
     args = parser.parse_args()
 
     boundaryPredictions = horizonNet()
-    preds = boundaryPredictions.predict(args.filename)
-    with open(
-        os.path.join("../HorizonNet_sc/assets/inferenced/", "out.json"), "w"
-    ) as f:
+    preds = boundaryPredictions.predict(IMAGE_DIRNAME / args.filename)
+    with open(OUTPUT_FILE, "w") as f:
         json.dump(
             preds,
             f,

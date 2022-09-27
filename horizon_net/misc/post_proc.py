@@ -1,3 +1,7 @@
+"""
+Source: assessed on 27/09/2022 from:
+https://github.com/sunset1995/HorizonNet/blob/master/misc/post_proc.py
+"""
 import numpy as np
 from scipy.ndimage import map_coordinates
 from scipy.spatial.distance import pdist, squareform

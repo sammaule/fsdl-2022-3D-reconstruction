@@ -1,6 +1,11 @@
+"""
+Source: assessed on 27/09/2022 from:
+https://github.com/sunset1995/HorizonNet/blob/master/misc/utils.py
+"""
 import torch
 import torch.nn as nn
 from collections import OrderedDict
+import numpy as np
 
 
 def group_weight(module):
@@ -65,5 +70,12 @@ def save_model(net, path, args):
 def load_trained_model(Net, path):
     state_dict = torch.load(path, map_location="cpu")
     net = Net(**state_dict["kwargs"])
-    net.load_state_dict(state_dict["state_dict"])
+    state_dict["state_dict"]["x_mean"] = torch.FloatTensor(
+        np.array([0.485, 0.456, 0.406])[None, :, None, None]
+    )
+    state_dict["state_dict"]["x_std"] = torch.FloatTensor(
+        np.array([0.229, 0.224, 0.225])[None, :, None, None]
+    )
+
+    net.load_state_dict(state_dict["state_dict"], strict=True)
     return net
