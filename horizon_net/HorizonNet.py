@@ -3,16 +3,14 @@
 The output is similar to the dictionary in the file
   assets\inferenced\demo_aligned_rgb.json
 
-The dictionary, together with the aligned image could be used to generate
-a 3D layout, by using the layout_viewer.py file
+The dictionary, together with the aligned image could be used to generate a 3D layout, by using the layout_viewer.py file
 
 Example usage as a script:
 
   cd horizon_net
   python HorizonNet.py assets/preprocessed/demo_aligned_rgb.png
 
-For testing, when called directly, the module will also return a .json file specified
-in OUTPUT_FILE
+When called directly, the module will also return a .json file specified in OUTPUT_FILE
 """
 import sys
 import json
@@ -76,9 +74,6 @@ def augment_undo(x_imgs_augmented, aug_type):
 
 
 class horizonNet:
-    """Predict for each column, the positions of floor-wall, ceiling-wall, and probability of wall-wall
-    from an aligned panorama image."""
-
     def __init__(self, model_path=None):
         if model_path is None:
             model_path = STAGED_MODEL_DIRNAME / MODEL_FILE

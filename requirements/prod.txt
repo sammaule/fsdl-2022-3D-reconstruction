@@ -4,3 +4,9 @@
 #
 #    pip-compile requirements/prod.in
 #
+numpy==1.21.6
+    # via -r requirements/prod.in
+torch==1.12.1
+    # via -r requirements/prod.in
+typing-extensions==4.3.0
+    # via torch

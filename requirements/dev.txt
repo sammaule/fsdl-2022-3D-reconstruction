@@ -184,6 +184,7 @@ notebook-shim==0.1.0
     # via nbclassic
 numpy==1.21.6
     # via
+    #   -c requirements\prod.txt
     #   -r requirements/dev.in
     #   open3d
     #   opencv-python
@@ -308,6 +309,7 @@ tomlkit==0.11.4
     # via jupyter-packaging
 torch==1.12.1
     # via
+    #   -c requirements\prod.txt
     #   -r requirements/dev.in
     #   torchvision
 torchvision==0.13.1
@@ -341,6 +343,7 @@ typed-ast==1.5.4
     # via black
 typing-extensions==4.3.0
     # via
+    #   -c requirements\prod.txt
     #   anyio
     #   argon2-cffi
     #   black

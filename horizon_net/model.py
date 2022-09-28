@@ -2,10 +2,13 @@
 Source: assessed on 27/09/2022 from:
 https://github.com/sunset1995/HorizonNet/blob/master/model.py
 
-The code is modified so that it works with Torchscript, the old code is kept under comment:
+The code is modified so that it works with Torchscript, the old code is kept under comment.
+The following changes are made to the original file:
+
 - declare the types of the variables in the functions
 - replace class variables by register_buffer and add them directly to state_dict later
 - replace del self.encoder.fc, self.encoder.avgpool by assign these layers to nn.Identity()
+- replace zip by enumerate(module)
 
 """
 import numpy as np
