@@ -2,6 +2,7 @@
 black
 pre-commit
 wincertstore
+<<<<<<< HEAD
 py360convert
 Pillow
 jupyter
@@ -16,3 +17,5 @@ torch
 torchvision
 nbformat
 ipykernel
+=======
+>>>>>>> main
