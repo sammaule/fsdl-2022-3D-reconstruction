@@ -2,6 +2,8 @@
 black
 pre-commit
 wincertstore
+gradio
+pyngrok
 torch
 torchvision
 numpy
