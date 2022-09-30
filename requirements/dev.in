@@ -4,4 +4,3 @@ pre-commit
 wincertstore
 gradio
 pyngrok
-opencv-python
