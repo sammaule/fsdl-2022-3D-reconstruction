@@ -1,2 +1,7 @@
 torch
 numpy
+gradio
+scipy
+Pillow
+shapely
+sklearn
