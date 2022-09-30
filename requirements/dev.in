@@ -4,3 +4,13 @@ pre-commit
 wincertstore
 gradio
 pyngrok
+torch
+torchvision
+numpy
+scipy
+sklearn
+Pillow
+tqdm
+opencv-python
+open3d
+shapely
