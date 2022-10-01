@@ -16,6 +16,7 @@ import sys
 import json
 import argparse
 from pathlib import Path
+from typing import Union
 import numpy as np
 from PIL import Image
 import torch
@@ -73,16 +74,19 @@ def augment_undo(x_imgs_augmented, aug_type):
     return np.array(x_imgs)
 
 
-class horizonNet:
+class HorizonNet:
     def __init__(self, model_path=None):
         if model_path is None:
             model_path = STAGED_MODEL_DIRNAME / MODEL_FILE
         self.model = torch.jit.load(model_path)
 
     @torch.no_grad()
-    def predict(self, path):
+    def predict(self, image: Union[str, Path, Image.Image]):
         # Load image
-        img_pil = Image.open(path)
+        img_pil = image
+        if not isinstance(image, Image.Image):
+            img_pil = Image.open(image)
+
         if img_pil.size != (1024, 512):
             img_pil = img_pil.resize((1024, 512), Image.BICUBIC)
         img_ori = np.array(img_pil)[..., :3].transpose([2, 0, 1]).copy()
@@ -91,6 +95,7 @@ class horizonNet:
         H, W = tuple(x.shape[2:])
 
         x, aug_type = augment(x, False, [])
+
         y_bon_, y_cor_ = self.model(x)
         y_bon_ = augment_undo(y_bon_.cpu(), aug_type).mean(0)
         y_cor_ = augment_undo(torch.sigmoid(y_cor_).cpu(), aug_type).mean(0)
@@ -160,7 +165,7 @@ def main():
     )
     args = parser.parse_args()
 
-    boundaryPredictions = horizonNet()
+    boundaryPredictions = HorizonNet()
     preds = boundaryPredictions.predict(IMAGE_DIRNAME / args.filename)
     with open(OUTPUT_FILE, "w") as f:
         json.dump(
