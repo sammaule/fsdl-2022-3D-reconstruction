@@ -14,7 +14,10 @@ def handler(event, _context):
     print("INFO loading image")
     image = _load_image(event)
     if image is None:
-        return {"statusCode": 400, "message": "neither image_url nor image found in event"}
+        return {
+            "statusCode": 400,
+            "message": "neither image_url nor image found in event",
+        }
     print("INFO image loaded")
     print("INFO starting inference")
     predictions_dict = model.predict(image)
@@ -31,12 +34,12 @@ def _load_image(event):
     image_url = event.get("image_url")
     if image_url is not None:
         print("INFO url {}".format(image_url))
-        return util.read_image_pil(image_url, grayscale=True)
+        return util.read_image_pil(image_url, grayscale=False)
     else:
         image = event.get("image")
         if image is not None:
             print("INFO reading image from event")
-            return util.read_b64_image(image, grayscale=True)
+            return util.read_b64_image(image, grayscale=False)
         else:
             return None
 
