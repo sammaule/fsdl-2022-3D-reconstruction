@@ -4,9 +4,6 @@ import gradio as gr
 
 from pathlib import Path
 
-INPUT_IMAGE_PATH = str(Path(__file__).parent / "panoramic_room.png")
-OUTPUT_IMAGE_PATH = str(Path(__file__).parent / "volumeric_room.png")
-
 GRADIO_SERVER_PORT = "31726"
 
 os.environ["GRADIO_SERVER_PORT"] = GRADIO_SERVER_PORT
@@ -16,8 +13,12 @@ def render_3d(user_input):
 
     teapot = str(Path(__file__).parent / "teapot.obj")
     pumpkin = str(Path(__file__).parent / "pumpkin.obj")
+    room_layout = str(Path(__file__).parent / "room_layout.obj")
 
-    return pumpkin
+    panoramic_room = str(Path(__file__).parent / "panoramic_room.png")
+    volumeric_room = str(Path(__file__).parent / "volumeric_room.png")
+
+    return room_layout
 
 
 def demo():
