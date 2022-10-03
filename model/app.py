@@ -28,8 +28,6 @@ def handler(event, _context):
     # predictions_dict = model.predict(image)
     # print("INFO inference complete")
     # image_stat = ImageStat.Stat(image)
-    # print("METRIC image_mean_intensity {}".format(image_stat.mean[0]))
-    # print("METRIC image_area {}".format(image.size[0] * image.size[1]))
     return {"pred": "Hello from AWS Lambda using Python"}
 
 
@@ -39,12 +37,12 @@ def _load_image(event):
     image_url = event.get("image_url")
     if image_url is not None:
         print("INFO url {}".format(image_url))
-        return util.read_image_pil(image_url, grayscale=False)
-        image = event.get("image")
+        return util.read_image_pil(image_url, grayscale=True)
     else:
+        image = event.get("image")
         if image is not None:
             print("INFO reading image from event")
-            return util.read_b64_image(image, grayscale=False)
+            return util.read_b64_image(image, grayscale=True)
         else:
             return None
 
