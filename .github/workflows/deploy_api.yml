@@ -1,5 +1,5 @@
 # Pushes API image to AWS ECR then deploys to AWS lambda
-name: Push to AWS ECR
+name: Deploy lambda function
 
 on:
   push:
@@ -13,7 +13,7 @@ env:
 
 jobs:
   deploy:
-    name: Deploy
+    name: Deploy API
     runs-on: ubuntu-latest
     environment: production
 

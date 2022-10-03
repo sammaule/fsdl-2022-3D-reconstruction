@@ -11,7 +11,7 @@ env:
 
 jobs:
   deploy:
-    name: Deploy
+    name: Deploy frontend
     runs-on: ubuntu-latest
     environment: production
 
@@ -39,6 +39,6 @@ jobs:
           # Build a docker container and
           # push it to ECR so that it can
           # be deployed to AWS lambda.
-          docker build -f model/Dockerfile -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker build -f frontend/Dockerfile -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
