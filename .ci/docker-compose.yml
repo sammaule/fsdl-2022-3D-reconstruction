@@ -4,3 +4,11 @@ services:
     build:
       context: ..
       dockerfile: model/Dockerfile
+  frontend:
+    environment:
+      - LAMBDA_FUNCTION_URL
+    build:
+      context: ..
+      dockerfile: frontend/Dockerfile
+    ports:
+      - "5000:5000"

@@ -16,6 +16,5 @@ ENV PYTHONPATH ".:"
 # Copy only the relevant directories
 #   note that we use a .dockerignore file to avoid copying logs etc.
 COPY frontend/ ./frontend
-COPY ./.ci ./.ci
 
-ENTRYPOINT ["python3", "frontend/make_gradio.py"]
+ENTRYPOINT ["python3", "frontend/app.py"]

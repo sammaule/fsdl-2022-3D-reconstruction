@@ -2,6 +2,7 @@ torch
 numpy
 gradio
 scipy
+requests
 Pillow
 shapely
 sklearn

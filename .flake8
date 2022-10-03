@@ -1,5 +1,5 @@
 [flake8]
-select = ANN,B,B9,BLK,C,D,E,F,I,S,W
+select = B,B9,BLK,C,D,E,F,I,S,W
   # only check selected error codes
 application-import-names = horizon_net
   # flake8-import-order: which names are first party?
@@ -13,6 +13,8 @@ docstring-style = numpy
   # darglint: which docstring style guide do we use?
 suppress-none-returning = true
   # flake8-annotations: do we allow un-annotated Nones in returns?
+max-line-length = 160
+  # flake8: max line length
 mypy-init-return = true
   # flake8-annotations: do we allow init to have no return annotation?
 per-file-ignores =
