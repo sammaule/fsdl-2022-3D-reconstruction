@@ -1,16 +1,21 @@
-"""AWS Lambda function serving 3D horizoNet predictions."""
-import json
+# import json
 
 # from PIL import ImageStat
 
-from horizon_net.horizonnet_reconstruction import HorizonNet
-import horizon_net.util as util
+# from horizon_net.horizonnet_reconstruction import HorizonNet
+# import horizon_net.util as util
 
-model = HorizonNet()
+# model = HorizonNet()
 
 
 def handler(event, _context):
-    """Provide main prediction API."""
+    """handler api function
+    Args:
+        event (_type_): _description_
+        context (_type_): _description_
+    Returns:
+        str: message
+    """
     print("INFO loading image")
     # image = _load_image(event)
     # if image is None:
@@ -28,24 +33,24 @@ def handler(event, _context):
     return {"pred": "Hello from AWS Lambda using Python"}
 
 
-def _load_image(event):
-    event = _from_string(event)
-    event = _from_string(event.get("body", event))
-    image_url = event.get("image_url")
-    if image_url is not None:
-        print("INFO url {}".format(image_url))
-        return util.read_image_pil(image_url, grayscale=False)
-    else:
-        image = event.get("image")
-        if image is not None:
-            print("INFO reading image from event")
-            return util.read_b64_image(image, grayscale=False)
-        else:
-            return None
+# def _load_image(event):
+#    event = _from_string(event)
+#    event = _from_string(event.get("body", event))
+#    image_url = event.get("image_url")
+#    if image_url is not None:
+#        print("INFO url {}".format(image_url))
+#        return util.read_image_pil(image_url, grayscale=False)
+#        image = event.get("image")
+#    else:
+#        if image is not None:
+#            print("INFO reading image from event")
+#            return util.read_b64_image(image, grayscale=False)
+#        else:
+#            return None
 
 
-def _from_string(event):
-    if isinstance(event, str):
-        return json.loads(event)
-    else:
-        return event
+# def _from_string(event):
+#    if isinstance(event, str):
+#        return json.loads(event)
+#    else:
+#        return event
