@@ -11,15 +11,17 @@ from pathlib import Path
 from typing import Callable, TypeVar
 
 import cv2
+from dotenv import load_dotenv
 import gradio as gr
 import numpy as np
 from PIL.Image import Image
 import requests
 
-# HorizonNet = TypeVar("HorizonNet", bound="HorizonNet")
-PredictorBackend = TypeVar("PredictorBackend", bound="PredictorBackend")
+PB = TypeVar("PB", bound="PredictorBackend")
 
 MODEL_URL = os.getenv("LAMBDA_FUNCTION_URL")
+
+load_dotenv()
 
 
 def main(model_url: str) -> None:
@@ -37,11 +39,11 @@ class PredictorBackend:
     And 3D reconstruction returned.
     """
 
-    def __init__(self: PredictorBackend, model_url: str) -> None:
+    def __init__(self: PB, model_url: str) -> None:
         """Initialize the predictor backend."""
         self.model_url = model_url
 
-    def predict(self: PredictorBackend, image: np.ndarray) -> tuple:
+    def predict(self: PB, image: np.ndarray) -> tuple:
         """Generate images from prediction."""
         logging.info(f"Sending image to backend at {self.model_url}")
         pumpkin = str(Path(__file__).parent / "pumpkin.obj")
@@ -51,7 +53,7 @@ class PredictorBackend:
 
         return (pumpkin, text)
 
-    def send_images_to_aws_lambda(self: PredictorBackend, image: np.ndarray):
+    def send_images_to_aws_lambda(self: PB, image: np.ndarray):
         """Send images (encode to b64) to aws lambda function."""
         encoded_image = base64.b64encode(image).decode("utf8")
 
