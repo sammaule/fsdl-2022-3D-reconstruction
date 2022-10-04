@@ -13,7 +13,7 @@ def main(model_url):
     """Run the frontend."""
     predictor = PredictorBackend(model_url)
     frontend = make_frontend(predictor.predict)
-    frontend.launch(share=True, server_name="0.0.0.0", server_port=5000)  # noqa: S104
+    frontend.launch(share=True, server_name="0.0.0.0", server_port=80)  # noqa: S104
 
 
 class PredictorBackend:
