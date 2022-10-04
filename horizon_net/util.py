@@ -26,6 +26,7 @@ def read_image_pil(image_uri: Union[Path, str], grayscale=False):
 
     """
     with smart_open.open(image_uri, "rb") as image_file:
+        print(grayscale)
         return read_image_pil_file(image_file, grayscale)
 
 

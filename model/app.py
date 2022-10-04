@@ -3,10 +3,12 @@ import os
 import rootpath
 
 os.chdir(rootpath.append()[-1])
+
 from horizon_net.horizonnet_reconstruction import HorizonNet
 import horizon_net.util as util
-
 model = HorizonNet()
+
+#!curl -XPOST "http://localhost:9000/2015-03-31/functions/function/invocations" -d '{"image_url": "https://image.shutterstock.com/image-illustration/interior-design-modern-apartment-panorama-600w-75987118.jpg"}'
 
 def handler(event, _context):
     """handler api function
@@ -17,13 +19,14 @@ def handler(event, _context):
         str: message
     """
     print("INFO loading image")
+
     image = _load_image(event)
-    # if image is None:
-    #    return {"pred": "neither image_url nor image found in event"}
-    # predictions_dict = model.predict(image)
-    # print("INFO inference complete")
-    # image_stat = ImageStat.Stat(image)
-    return {"pred": f"Hello from AWS Lambda using Python {image}"}
+    if image is None:
+       return {"pred": "neither image_url nor image found in event"}
+    predictions_dict = model.predict(image)
+    print("INFO inference complete")
+    #image_stat = ImageStat.Stat(image)
+    return predictions_dict
 
 
 def _load_image(event):
@@ -32,12 +35,12 @@ def _load_image(event):
     image_url = event.get("image_url")
     if image_url is not None:
         print("INFO url {}".format(image_url))
-        return util.read_image_pil(image_url, grayscale=True)
+        return util.read_image_pil(image_url, grayscale=False)
     else:
         image = event.get("image")
         if image is not None:
             print("INFO reading image from event")
-            return util.read_b64_image(image, grayscale=True)
+            return util.read_b64_image(image, grayscale=False)
         else:
             return None
 

@@ -86,7 +86,7 @@ class HorizonNet:
         img_pil = image
         if not isinstance(image, Image.Image):
             img_pil = Image.open(image)
-
+        print(img_pil.size)
         if img_pil.size != (1024, 512):
             img_pil = img_pil.resize((1024, 512), Image.BICUBIC)
         img_ori = np.array(img_pil)[..., :3].transpose([2, 0, 1]).copy()
