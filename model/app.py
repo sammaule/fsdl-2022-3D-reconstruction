@@ -1,12 +1,12 @@
 import json
+import os
+import rootpath
 
-# from PIL import ImageStat
-
+os.chdir(rootpath.append()[-1])
 from horizon_net.horizonnet_reconstruction import HorizonNet
 import horizon_net.util as util
 
 model = HorizonNet()
-
 
 def handler(event, _context):
     """handler api function
