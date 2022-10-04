@@ -5,3 +5,7 @@ scipy
 Pillow
 shapely
 sklearn
+Pillow
+smart-open
+shapely
+torch

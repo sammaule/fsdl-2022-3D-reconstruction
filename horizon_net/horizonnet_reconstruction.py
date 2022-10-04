@@ -22,7 +22,7 @@ from PIL import Image
 import torch
 from scipy.ndimage.filters import maximum_filter
 from shapely.geometry import Polygon
-from misc import post_proc
+from .misc import post_proc
 
 STAGED_MODEL_DIRNAME = Path(__file__).resolve().parent
 IMAGE_DIRNAME = Path(__file__).resolve().parent
