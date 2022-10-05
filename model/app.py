@@ -26,16 +26,11 @@ def handler(event, _context):
     image = _load_image(event)
     if image is None:
         return {"pred": "neither image_url nor image found in event"}
-    print('image loading')
-    model_url = "https://horizonnetmodel.s3.eu-west-2.amazonaws.com/horizonNet.pt"
-    print("downloading")
-    response = request.urlretrieve(model_url, "horizonNet.pt")
+    print("image loaded")
+    predictions_dict = model.predict(image)
+    print("INFO inference complete")
 
-    return {"pred": image.size}
-    #predictions_dict = model.predict(image)
-    #print("INFO inference complete")
-
-    #return predictions_dict
+    return predictions_dict
 
 
 def _load_image(event):

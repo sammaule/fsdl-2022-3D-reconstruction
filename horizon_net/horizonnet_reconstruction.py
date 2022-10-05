@@ -78,15 +78,10 @@ def augment_undo(x_imgs_augmented, aug_type):
 
 class HorizonNet:
     def __init__(self, model_path=None):
-        model_path = "horizonNet.pt"
-        print(os.listdir(), model_path)
-        if os.path.isfile(model_path) is False:
-            model_url = (
-                "https://horizonnetmodel.s3.eu-west-2.amazonaws.com/horizonNet.pt"
-            )
-            print("downloading")
-            response = request.urlretrieve(model_url, "horizonNet.pt")
-
+        print(MODEL_FILE)
+        if model_path is None:
+            model_path = MODEL_FILE
+        print('loading model')
         self.model = torch.jit.load(model_path)
 
     @torch.no_grad()
