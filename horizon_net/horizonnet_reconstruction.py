@@ -83,10 +83,10 @@ class HorizonNet:
             model_path = MODEL_FILE
         print("loading model")
         model_url = "https://horizonnetmodel.s3.eu-west-2.amazonaws.com/horizonNet.pt"
-        print("downloading",os.getcwd())
-        response = request.urlretrieve(model_url, "horizonNet.pt")
-        print("downloaded",os.getcwd(),os.listdir())
-        self.model = torch.jit.load("horizonNet.pt")
+        print("downloading", os.getcwd())
+        response = request.urlretrieve(model_url, "/tmp/horizonNet.pt")
+        print("downloaded", os.getcwd(), os.listdir())
+        self.model = torch.jit.load("/tmp/horizonNet.pt")
 
     @torch.no_grad()
     def predict(self, image: Union[str, Path, Image.Image]):
