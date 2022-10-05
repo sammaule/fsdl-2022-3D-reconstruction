@@ -8,7 +8,7 @@ RUN set -ex && mkdir /repo
 WORKDIR /repo
 
 # Install Python dependencies
-COPY requirements/prod.txt ./requirements.txt
+COPY requirements/prod_frontend.txt ./requirements.txt
 RUN pip install --upgrade pip==21.1.3
 RUN pip install -r requirements.txt
 ENV PYTHONPATH ".:"
