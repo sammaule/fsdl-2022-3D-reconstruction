@@ -8,7 +8,13 @@
 # You can also reference a tag or branch, but the action may change without warning.
 name: Publish Docker image
 
-on: push
+# On any pull request where file in frontend/ folder changes
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'frontend/*'
 
 jobs:
   push_to_registry:
@@ -26,12 +32,6 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USER }}
           password: ${{ secrets.DOCKER_PASS }}
-
-      # - name: Extract metadata (tags, labels) for Docker
-      #   id: meta
-      #   uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
-      #   with:
-      #     images: ${{ secrets.DOCKER_USERNAME }}/fsdl-3d-recon
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v2
