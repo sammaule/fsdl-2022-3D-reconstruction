@@ -39,4 +39,4 @@ jobs:
           context: .
           file: frontend/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/fsdl-3d-recon:latest
+          tags: semaule/fsdl-3d-recon:latest
