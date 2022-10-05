@@ -11,8 +11,7 @@ import torch
 
 #!curl -XPOST "http://localhost:9000/2015-03-31/functions/function/invocations" -d '{"image_url": "https://image.shutterstock.com/image-illustration/interior-design-modern-apartment-panorama-600w-75987118.jpg"}'
 
-
-#model = HorizonNet()
+model = HorizonNet()
 
 
 def handler(event, _context):
@@ -28,18 +27,11 @@ def handler(event, _context):
     image = _load_image(event)
     if image is None:
         return {"pred": "neither image_url nor image found in event"}
-    model_url = (
-                "https://horizonnetmodel.s3.eu-west-2.amazonaws.com/horizonNet.pt"
-    )
-    print(os.listdir(),"downloading")
-    response = request.urlretrieve(model_url, "horizonNet.pt")
-    print(os.listdir())
-    model = torch.jit.load("horizonNet.pt")
 
-    #predictions_dict = model.predict(image)
-    #print("INFO inference complete")
+    predictions_dict = model.predict(image)
+    print("INFO inference complete")
 
-    return {'pred':'basic test'}
+    return predictions_dict
 
 
 def _load_image(event):
