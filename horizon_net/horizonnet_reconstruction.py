@@ -26,7 +26,7 @@ from .misc import post_proc
 
 STAGED_MODEL_DIRNAME = Path(__file__).resolve().parent
 IMAGE_DIRNAME = Path(__file__).resolve().parent
-MODEL_FILE = "horizonNet.pt"
+MODEL_FILE = "horizon_net/horizonNet.pt"
 OUTPUT_FILE = "assets/inferenced/torchscript_test.json"
 
 
@@ -76,8 +76,9 @@ def augment_undo(x_imgs_augmented, aug_type):
 
 class HorizonNet:
     def __init__(self, model_path=None):
+        print(MODEL_FILE)
         if model_path is None:
-            model_path = STAGED_MODEL_DIRNAME / MODEL_FILE
+            model_path = MODEL_FILE
         self.model = torch.jit.load(model_path)
 
     @torch.no_grad()

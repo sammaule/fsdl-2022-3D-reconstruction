@@ -8,6 +8,10 @@ from horizon_net.horizonnet_reconstruction import HorizonNet
 import horizon_net.util as util
 model = HorizonNet()
 
+import torch
+MODEL_FILE = "horizon_net/horizonNet.pt"
+torch.jit.load(MODEL_FILE)
+
 #!curl -XPOST "http://localhost:9000/2015-03-31/functions/function/invocations" -d '{"image_url": "https://image.shutterstock.com/image-illustration/interior-design-modern-apartment-panorama-600w-75987118.jpg"}'
 
 def handler(event, _context):
