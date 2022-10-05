@@ -7,7 +7,6 @@ os.chdir(rootpath.append()[-1])
 from horizon_net.horizonnet_reconstruction import HorizonNet
 import horizon_net.util as util
 from urllib import request
-import torch
 
 #!curl -XPOST "http://localhost:9000/2015-03-31/functions/function/invocations" -d '{"image_url": "https://image.shutterstock.com/image-illustration/interior-design-modern-apartment-panorama-600w-75987118.jpg"}'
 
@@ -27,11 +26,16 @@ def handler(event, _context):
     image = _load_image(event)
     if image is None:
         return {"pred": "neither image_url nor image found in event"}
+    print('image loading')
+    model_url = "https://horizonnetmodel.s3.eu-west-2.amazonaws.com/horizonNet.pt"
+    print("downloading")
+    response = request.urlretrieve(model_url, "horizonNet.pt")
 
-    predictions_dict = model.predict(image)
-    print("INFO inference complete")
+    return {"pred": image.size}
+    #predictions_dict = model.predict(image)
+    #print("INFO inference complete")
 
-    return predictions_dict
+    #return predictions_dict
 
 
 def _load_image(event):
