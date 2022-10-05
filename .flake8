@@ -19,4 +19,7 @@ mypy-init-return = true
   # flake8-annotations: do we allow init to have no return annotation?
 per-file-ignores =
   # list of case-by-case ignores, see files for details
-  model/app.py:D100,D103,ANN001,ANN201
+  model/app.py:D100,D103
+exclude =
+  horizon_net/assets/*
+  horizon_net/misc/*
