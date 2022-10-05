@@ -16,3 +16,4 @@ open3d
 shapely
 jupyter
 rootpath
+s3fs

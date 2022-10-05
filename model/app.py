@@ -6,13 +6,12 @@ os.chdir(rootpath.append()[-1])
 
 from horizon_net.horizonnet_reconstruction import HorizonNet
 import horizon_net.util as util
-model = HorizonNet()
 
-import torch
-MODEL_FILE = "horizon_net/horizonNet.pt"
-torch.jit.load(MODEL_FILE)
 
 #!curl -XPOST "http://localhost:9000/2015-03-31/functions/function/invocations" -d '{"image_url": "https://image.shutterstock.com/image-illustration/interior-design-modern-apartment-panorama-600w-75987118.jpg"}'
+
+
+model = HorizonNet()
 
 def handler(event, _context):
     """handler api function
@@ -26,10 +25,10 @@ def handler(event, _context):
 
     image = _load_image(event)
     if image is None:
-       return {"pred": "neither image_url nor image found in event"}
+        return {"pred": "neither image_url nor image found in event"}
     predictions_dict = model.predict(image)
     print("INFO inference complete")
-    #image_stat = ImageStat.Stat(image)
+    # image_stat = ImageStat.Stat(image)
     return predictions_dict
 
 

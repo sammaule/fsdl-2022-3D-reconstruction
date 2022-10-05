@@ -1,13 +1,10 @@
-FROM public.ecr.aws/lambda/python:3.8
-
-
+FROM public.ecr.aws/lambda/python:3.7
 
 # Install the function's dependencies using file requirements.txt
 # from your project folder.
 COPY requirements/prod.txt ./requirements.txt
-RUN  pip3 install -r requirements.txt --target "${LAMBDA_TASK_ROOT}"
-
-
+RUN pip install --upgrade pip==21.1.3
+RUN pip install -r requirements.txt
 
 COPY horizon_net/ ./horizon_net
 COPY model/app.py ./app.py

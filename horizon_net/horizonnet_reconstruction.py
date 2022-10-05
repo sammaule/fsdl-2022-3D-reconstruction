@@ -14,6 +14,7 @@ When called directly, the module will also return a .json file specified in OUTP
 """
 import sys
 import json
+import os
 import argparse
 from pathlib import Path
 from typing import Union
@@ -23,6 +24,7 @@ import torch
 from scipy.ndimage.filters import maximum_filter
 from shapely.geometry import Polygon
 from .misc import post_proc
+from urllib import request
 
 STAGED_MODEL_DIRNAME = Path(__file__).resolve().parent
 IMAGE_DIRNAME = Path(__file__).resolve().parent
@@ -76,9 +78,13 @@ def augment_undo(x_imgs_augmented, aug_type):
 
 class HorizonNet:
     def __init__(self, model_path=None):
-        print(MODEL_FILE)
-        if model_path is None:
-            model_path = MODEL_FILE
+        model_path = "horizonNet.pt"
+        print(os.listdir(),model_path)
+        if os.path.isfile(model_path) is False:
+            model_url='https://horizonnetmodel.s3.eu-west-2.amazonaws.com/horizonNet.pt'
+            print('downloading')
+            response = request.urlretrieve(model_url, "horizonNet.pt")
+            
         self.model = torch.jit.load(model_path)
 
     @torch.no_grad()
