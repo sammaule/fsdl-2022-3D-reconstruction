@@ -15,8 +15,8 @@ def main(model_url):
     predictor = PredictorBackend(model_url)
     frontend = make_frontend(predictor.predict)
     frontend.launch(
-        share=True, server_name="127.0.0.1", server_port=SERVER_PORT
-    )  # noqa: S104
+        share=True, server_name="0.0.0.0", server_port=SERVER_PORT  # noqa: S104
+    )
 
 
 class PredictorBackend:
