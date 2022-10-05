@@ -10,5 +10,3 @@ services:
     build:
       context: ..
       dockerfile: frontend/Dockerfile
-    ports:
-      - "5000:5000"
