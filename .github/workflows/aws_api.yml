@@ -1,7 +1,10 @@
 # Pushes API image to AWS ECR then deploys to AWS lambda
 name: Push to AWS ECR
 
-on: push
+on:
+  push:
+    branches:
+      - main
 
 env:
   AWS_REGION: eu-west-2
