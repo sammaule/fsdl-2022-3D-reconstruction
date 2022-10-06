@@ -12,24 +12,27 @@ Example usage as a script:
 
 When called directly, the module will also return a .json file specified in OUTPUT_FILE
 """
-import sys
+import argparse
 import json
 import os
-import argparse
 from pathlib import Path
+import sys
 from typing import Union
+from urllib import request
+
 import numpy as np
 from PIL import Image
-import torch
 from scipy.ndimage.filters import maximum_filter
 from shapely.geometry import Polygon
+import torch
+
 from .misc import post_proc
-from urllib import request
 
 STAGED_MODEL_DIRNAME = Path(__file__).resolve().parent
 IMAGE_DIRNAME = Path(__file__).resolve().parent
-MODEL_FILE = "horizon_net/horizonNet.pt"
+MODEL_FILE = "/tmp/horizonNet.pt"
 OUTPUT_FILE = "assets/inferenced/torchscript_test.json"
+MODEL_URL = "https://horizonnetmodel.s3.eu-west-2.amazonaws.com/horizonNet.pt"
 
 
 def find_N_peaks(signal, r=29, min_v=0.05, N=None):
@@ -77,19 +80,35 @@ def augment_undo(x_imgs_augmented, aug_type):
 
 
 class HorizonNet:
-    def __init__(self, model_path=None):
-        print(MODEL_FILE)
-        if model_path is None:
-            model_path = MODEL_FILE
-        print("loading model")
-        model_url = "https://horizonnetmodel.s3.eu-west-2.amazonaws.com/horizonNet.pt"
-        print("downloading", os.getcwd())
-        response = request.urlretrieve(model_url, "/tmp/horizonNet.pt")
-        print("downloaded", os.getcwd(), os.listdir())
-        self.model = torch.jit.load("/tmp/horizonNet.pt")
+    """Trained HorizonNet Model Class
+
+    Loads the pretrained torchscript deployed memory from a public s3 bucket and
+    executes a prediction over new unseen data.
+    """
+
+    def __init__(self):
+        if os.path.isfile(MODEL_FILE) is False:
+            print("downloading", os.getcwd())
+            _ = request.urlretrieve(MODEL_URL, MODEL_FILE)
+            print("downloaded", os.getcwd(), os.listdir())
+        self.model = torch.jit.load(MODEL_FILE)
 
     @torch.no_grad()
     def predict(self, image: Union[str, Path, Image.Image]):
+        """Genetate new layout reconstruction on a new image using trained model
+
+        Parameters
+        ----------
+        image : array_like
+            Can be either an image already loaded with PIL other the path
+            pointing to where that image is stored
+
+        Returns
+        -------
+        dict
+            Dictionary contains the predicted position of the corners as well
+            location of the floor and ceiling for each column of the image
+        """
         # Load image
         img_pil = image
         if not isinstance(image, Image.Image):

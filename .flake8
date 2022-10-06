@@ -1,7 +1,6 @@
 [flake8]
 select = B,B9,BLK,C,D,E,F,I,S,W
   # only check selected error codes
-max-line-length = 120
   # E501 - flake8 -- line length too long, actually handled by black
 extend-ignore =
   # ANN - flake8-annotations type annotation check
@@ -29,6 +28,7 @@ mypy-init-return = true
 per-file-ignores =
   # list of case-by-case ignores, see files for details
   */__init__.py:F401,I
+  horizon_net/horizonnet_reconstruction.py:D301,W605,D400,W605,S108,S310,E203,D103
   model/app.py:D100,D103,ANN001,ANN201
 exclude =
   horizon_net/assets/*

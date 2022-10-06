@@ -1,31 +1,22 @@
 import json
 import os
-import rootpath
 
-os.chdir(rootpath.append()[-1])
+import rootpath
 
 from horizon_net.horizonnet_reconstruction import HorizonNet
 import horizon_net.util as util
-from urllib import request
 
-#!curl -XPOST "http://localhost:9000/2015-03-31/functions/function/invocations" -d '{"image_url": "https://image.shutterstock.com/image-illustration/interior-design-modern-apartment-panorama-600w-75987118.jpg"}'
+os.chdir(rootpath.append()[-1])
 
 model = HorizonNet()
 
 
 def handler(event, _context):
-    """handler api function
-    Args:
-        event (_type_): _description_
-        context (_type_): _description_
-    Returns:
-        str: message
-    """
     print("INFO loading image")
 
     image = _load_image(event)
     if image is None:
-        return {"pred": "neither image_url nor image found in event"}
+        return {"prediction": "neither image_url nor image found in event"}
     print("image loaded")
     predictions_dict = model.predict(image)
     print("INFO inference complete")
