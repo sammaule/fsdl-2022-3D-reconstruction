@@ -3,10 +3,11 @@ import os
 
 import rootpath
 
-from horizon_net.horizonnet_reconstruction import HorizonNet
-import horizon_net.util as util
+os.chdir(rootpath.append()[-1])  # noqa
 
-os.chdir(rootpath.append()[-1])
+from horizon_net.horizonnet_reconstruction import HorizonNet  # noqa
+import horizon_net.util as util  # noqa
+
 
 model = HorizonNet()
 
