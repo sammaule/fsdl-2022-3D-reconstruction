@@ -6,16 +6,10 @@
 #
 addict==2.4.0
     # via open3d
-aiobotocore==2.4.0
-    # via s3fs
 aiohttp==3.8.3
     # via
     #   -c requirements/prod.txt
-    #   aiobotocore
     #   gradio
-    #   s3fs
-aioitertools==0.11.0
-    # via aiobotocore
 aiosignal==1.2.0
     # via
     #   -c requirements/prod.txt
@@ -70,8 +64,6 @@ blessings==1.7
     # via
     #   -c requirements/prod.txt
     #   colour-runner
-botocore==1.27.59
-    # via aiobotocore
 certifi==2022.9.24
     # via
     #   -c requirements/prod.txt
@@ -165,7 +157,6 @@ fsspec==2022.8.2
     # via
     #   -c requirements/prod.txt
     #   gradio
-    #   s3fs
 gradio==3.4
     # via
     #   -c requirements/prod.txt
@@ -236,8 +227,6 @@ jinja2==3.1.2
     #   gradio
     #   nbconvert
     #   notebook
-jmespath==1.0.1
-    # via botocore
 joblib==1.2.0
     # via
     #   -c requirements/prod.txt
@@ -471,7 +460,6 @@ python-dateutil==2.8.2
     # via
     #   -c requirements/prod.txt
     #   analytics-python
-    #   botocore
     #   jupyter-client
     #   matplotlib
     #   pandas
@@ -515,8 +503,6 @@ rootpath==0.1.1
     # via
     #   -c requirements/prod.txt
     #   -r requirements/dev.in
-s3fs==2022.8.2
-    # via -r requirements/dev.in
 scikit-learn==1.0.2
     # via
     #   -c requirements/prod.txt
@@ -619,7 +605,6 @@ typing-extensions==4.3.0
     # via
     #   -c requirements/prod.txt
     #   aiohttp
-    #   aioitertools
     #   anyio
     #   argon2-cffi
     #   async-timeout
@@ -641,7 +626,6 @@ uc-micro-py==1.0.1
 urllib3==1.26.12
     # via
     #   -c requirements/prod.txt
-    #   botocore
     #   requests
 uvicorn==0.18.3
     # via
@@ -668,8 +652,6 @@ widgetsnbextension==4.0.3
     # via ipywidgets
 wincertstore==0.2
     # via -r requirements/dev.in
-wrapt==1.14.1
-    # via aiobotocore
 yarl==1.8.1
     # via
     #   -c requirements/prod.txt
