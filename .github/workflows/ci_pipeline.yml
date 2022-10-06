@@ -10,6 +10,7 @@ jobs:
       COMPOSE_FILE: .ci/docker-compose.yml
       DOCKER_USER: ${{ secrets.DOCKER_USER }}
       DOCKER_PASS: ${{ secrets.DOCKER_PASS }}
+      LAMBDA_FUNCTION_URL: ${{ secrets.LAMBDA_FUNCTION_URL }}
 
     steps:
     - name: Checkout code

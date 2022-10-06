@@ -4,3 +4,9 @@ services:
     build:
       context: ..
       dockerfile: model/Dockerfile
+  frontend:
+    environment:
+      - LAMBDA_FUNCTION_URL
+    build:
+      context: ..
+      dockerfile: frontend/Dockerfile
