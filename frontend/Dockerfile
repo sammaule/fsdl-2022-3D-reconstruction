@@ -9,6 +9,8 @@ WORKDIR /repo
 
 # Install Python dependencies
 COPY requirements/prod_frontend.txt ./requirements.txt
+RUN apt-get update
+RUN apt-get install ffmpeg libsm6 libxext6  -y
 RUN pip install --upgrade pip==21.1.3
 RUN pip install -r requirements.txt
 ENV PYTHONPATH ".:"
