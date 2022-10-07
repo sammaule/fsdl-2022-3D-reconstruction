@@ -1,7 +1,9 @@
+"""The module sets up the ngrok credientials."""
+
 import os
+from pathlib import Path
 
 from pyngrok import ngrok
-from pathlib import Path
 
 LOCALHOST_PORT_PATH = str(Path(__file__).parent / "server_port.txt")
 NGROK_AUTH_TOKEN_PATH = str(Path(__file__).parent / "ngrok_auth.txt")
@@ -16,6 +18,7 @@ print(NGROK_AUTH_TOKEN)
 
 
 def main():
+    """Set ngrok credentials."""
     config_file = ngrok.conf.DEFAULT_NGROK_CONFIG_PATH
     config_file_exists = os.path.exists(config_file)
     config_file_contents = os.system(f"cat {config_file}")

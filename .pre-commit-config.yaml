@@ -3,10 +3,23 @@ repos:
     rev: v2.3.0
     hooks:
     -   id: check-yaml
+    -   id: check-json
     -   id: end-of-file-fixer
     -   id: trailing-whitespace
+    -   id: detect-private-key
 -   repo: https://github.com/psf/black
     rev: 21.12b0
     hooks:
     -   id: black
         additional_dependencies: ['click==8.0.4']
+-   repo: https://github.com/PyCQA/flake8
+    rev: 3.9.2
+    hooks:
+      - id: flake8
+        additional_dependencies: [
+          flake8-annotations, flake8-bandit, flake8-bugbear, flake8-black, flake8-docstrings,
+          flake8-import-order, darglint, mypy, pycodestyle, pydocstyle]
+        args: ["--config", ".flake8"]
+    # additional configuration of flake8 and extensions in .flake8
+default_language_version:
+    python: python3.7

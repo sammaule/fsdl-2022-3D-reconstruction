@@ -1,0 +1,32 @@
+[flake8]
+select = B,B9,BLK,C,D,E,F,I,S,W
+  # only check selected error codes
+application-import-names = horizon_net
+  # flake8-import-order: which names are first party?
+import-order-style = google
+  # flake8-import-order: which import order style guide do we use?
+docstring-convention = numpy
+  # flake8-docstrings: which docstring style guide do we use?
+strictness = short
+  # darglint: how "strict" are we with docstring completeness?
+docstring-style = numpy
+  # darglint: which docstring style guide do we use?
+suppress-none-returning = true
+  # flake8-annotations: do we allow un-annotated Nones in returns?
+max-line-length = 160
+  # flake8: max line length
+mypy-init-return = true
+  # flake8-annotations: do we allow init to have no return annotation?
+per-file-ignores =
+  # list of case-by-case ignores, see files for details
+  model/app.py:D100,D103
+extend-ignore = W503, E203, S605
+exclude =
+  horizon_net/assets/*
+  horizon_net/misc/*
+  horizon_net/dataset.py
+  horizon_net/eval_cuboid.py
+  horizon_net/preprocess.py
+  horizon_net/model.py
+  horizon_net/eval_general.py
+  horizon_net/layout_viewer.py
