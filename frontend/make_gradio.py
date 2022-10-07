@@ -8,6 +8,7 @@ and the output of a 3D layout using gradio.
 import os
 import sys
 
+sys.path.append("..")
 import gradio as gr
 import open3d as o3d
 
@@ -15,7 +16,7 @@ from horizon_net.HorizonNet import horizonNet
 from horizon_net.layout_viewer import convert_to_3D
 from horizon_net.preprocess import preprocess
 
-sys.path.append("..")
+
 GRADIO_SERVER_PORT = "31726"
 
 os.environ["GRADIO_SERVER_PORT"] = GRADIO_SERVER_PORT
@@ -45,11 +46,13 @@ def render_3d(user_input):
 
 def demo():
     """Display a room layout."""
+    examples = ["demos/demo1.png", "demos/demo2.jpg"]
     frontend = gr.Interface(
         fn=render_3d,
         inputs=gr.components.Image(type="pil", label="Panorama"),
         outputs=gr.Model3D(clear_color=[0, 0, 0, 0], label="3D Layout"),
-        title="3d reconstruction",
+        title="3D reconstruction of a room layout from a panorama image",
+        examples=examples,
     )
 
     frontend.launch(share=True, server_port=int(GRADIO_SERVER_PORT))

@@ -4,7 +4,6 @@
 #
 #    pip-compile requirements/dev.in
 #
-<<<<<<< HEAD
 aiohttp==3.8.3
     # via
     #   -c requirements\prod.txt
@@ -57,51 +56,8 @@ bcrypt==4.0.0
     #   paramiko
 beautifulsoup4==4.11.1
     # via nbconvert
-||||||| 7b8bb53
-=======
-addict==2.4.0
-    # via open3d
-aiohttp==3.8.3
-    # via
-    #   -c requirements/prod.txt
-    #   gradio
-aiosignal==1.2.0
-    # via
-    #   -c requirements/prod.txt
-    #   aiohttp
-analytics-python==1.4.0
-    # via
-    #   -c requirements/prod.txt
-    #   gradio
-anyio==3.6.1
-    # via
-    #   -c requirements/prod.txt
-    #   httpcore
-    #   starlette
-async-timeout==4.0.2
-    # via
-    #   -c requirements/prod.txt
-    #   aiohttp
-asynctest==0.13.0
-    # via
-    #   -c requirements/prod.txt
-    #   aiohttp
-attrs==22.1.0
-    # via
-    #   -c requirements/prod.txt
-    #   aiohttp
-backoff==1.10.0
-    # via
-    #   -c requirements/prod.txt
-    #   analytics-python
-bcrypt==4.0.0
-    # via
-    #   -c requirements/prod.txt
-    #   paramiko
->>>>>>> 88ac98d3c8127d97e3823caeff0a3d0c02422b88
 black==22.8.0
     # via -r requirements/dev.in
-<<<<<<< HEAD
 bleach==5.0.1
     # via nbconvert
 certifi==2022.9.24
@@ -116,38 +72,14 @@ cffi==1.15.1
     #   argon2-cffi-bindings
     #   cryptography
     #   pynacl
-||||||| 7b8bb53
-=======
-certifi==2022.9.24
-    # via
-    #   -c requirements/prod.txt
-    #   httpcore
-    #   httpx
-    #   requests
-cffi==1.15.1
-    # via
-    #   -c requirements/prod.txt
-    #   cryptography
-    #   pynacl
->>>>>>> 88ac98d3c8127d97e3823caeff0a3d0c02422b88
 cfgv==3.3.1
     # via pre-commit
-<<<<<<< HEAD
 charset-normalizer==2.1.1
     # via
     #   -c requirements\prod.txt
     #   aiohttp
     #   requests
-||||||| 7b8bb53
-=======
-charset-normalizer==2.1.1
-    # via
-    #   -c requirements/prod.txt
-    #   aiohttp
-    #   requests
->>>>>>> 88ac98d3c8127d97e3823caeff0a3d0c02422b88
 click==8.1.3
-<<<<<<< HEAD
     # via
     #   -c requirements\prod.txt
     #   black
@@ -174,27 +106,8 @@ defusedxml==0.7.1
     # via nbconvert
 deprecation==2.1.0
     # via jupyter-packaging
-||||||| 7b8bb53
-    # via black
-colorama==0.4.5
-    # via click
-=======
-    # via
-    #   -c requirements/prod.txt
-    #   black
-    #   uvicorn
-cryptography==38.0.1
-    # via
-    #   -c requirements/prod.txt
-    #   paramiko
-cycler==0.11.0
-    # via
-    #   -c requirements/prod.txt
-    #   matplotlib
->>>>>>> 88ac98d3c8127d97e3823caeff0a3d0c02422b88
 distlib==0.3.6
     # via virtualenv
-<<<<<<< HEAD
 entrypoints==0.4
     # via jupyter-client
 fastapi==0.85.0
@@ -207,20 +120,8 @@ ffmpy==0.3.0
     # via
     #   -c requirements\prod.txt
     #   gradio
-||||||| 7b8bb53
-=======
-fastapi==0.85.0
-    # via
-    #   -c requirements/prod.txt
-    #   gradio
-ffmpy==0.3.0
-    # via
-    #   -c requirements/prod.txt
-    #   gradio
->>>>>>> 88ac98d3c8127d97e3823caeff0a3d0c02422b88
 filelock==3.8.0
     # via virtualenv
-<<<<<<< HEAD
 fonttools==4.37.4
     # via
     #   -c requirements\prod.txt
@@ -252,45 +153,10 @@ httpx==0.23.0
     # via
     #   -c requirements\prod.txt
     #   gradio
-||||||| 7b8bb53
-=======
-fonttools==4.37.4
-    # via
-    #   -c requirements/prod.txt
-    #   matplotlib
-frozenlist==1.3.1
-    # via
-    #   -c requirements/prod.txt
-    #   aiohttp
-    #   aiosignal
-fsspec==2022.8.2
-    # via
-    #   -c requirements/prod.txt
-    #   gradio
-gradio==3.4
-    # via
-    #   -c requirements/prod.txt
-    #   -r requirements/dev.in
-h11==0.12.0
-    # via
-    #   -c requirements/prod.txt
-    #   gradio
-    #   httpcore
-    #   uvicorn
-httpcore==0.15.0
-    # via
-    #   -c requirements/prod.txt
-    #   httpx
-httpx==0.23.0
-    # via
-    #   -c requirements/prod.txt
-    #   gradio
->>>>>>> 88ac98d3c8127d97e3823caeff0a3d0c02422b88
 identify==2.5.5
     # via pre-commit
 idna==3.4
     # via
-<<<<<<< HEAD
     #   -c requirements\prod.txt
     #   anyio
     #   requests
@@ -299,17 +165,6 @@ idna==3.4
 importlib-metadata==5.0.0
     # via
     #   -c requirements\prod.txt
-||||||| 7b8bb53
-=======
-    #   -c requirements/prod.txt
-    #   anyio
-    #   requests
-    #   rfc3986
-    #   yarl
-importlib-metadata==5.0.0
-    # via
-    #   -c requirements/prod.txt
->>>>>>> 88ac98d3c8127d97e3823caeff0a3d0c02422b88
     #   click
     #   jsonschema
     #   jupyterlab-server
@@ -317,7 +172,6 @@ importlib-metadata==5.0.0
     #   nbformat
     #   pre-commit
     #   virtualenv
-<<<<<<< HEAD
 importlib-resources==5.9.0
     # via jsonschema
 ipykernel==6.16.0
@@ -437,56 +291,6 @@ multidict==6.0.2
     #   -c requirements\prod.txt
     #   aiohttp
     #   yarl
-||||||| 7b8bb53
-=======
-jinja2==3.1.2
-    # via
-    #   -c requirements/prod.txt
-    #   gradio
-joblib==1.2.0
-    # via
-    #   -c requirements/prod.txt
-    #   scikit-learn
-kiwisolver==1.4.4
-    # via
-    #   -c requirements/prod.txt
-    #   matplotlib
-linkify-it-py==1.0.3
-    # via
-    #   -c requirements/prod.txt
-    #   markdown-it-py
-markdown-it-py[linkify,plugins]==2.1.0
-    # via
-    #   -c requirements/prod.txt
-    #   gradio
-    #   mdit-py-plugins
-markupsafe==2.1.1
-    # via
-    #   -c requirements/prod.txt
-    #   jinja2
-matplotlib==3.5.3
-    # via
-    #   -c requirements/prod.txt
-    #   gradio
-    #   open3d
-mdit-py-plugins==0.3.1
-    # via
-    #   -c requirements/prod.txt
-    #   markdown-it-py
-mdurl==0.1.2
-    # via
-    #   -c requirements/prod.txt
-    #   markdown-it-py
-monotonic==1.6
-    # via
-    #   -c requirements/prod.txt
-    #   analytics-python
-multidict==6.0.2
-    # via
-    #   -c requirements/prod.txt
-    #   aiohttp
-    #   yarl
->>>>>>> 88ac98d3c8127d97e3823caeff0a3d0c02422b88
 mypy-extensions==0.4.3
     # via black
 nbclassic==0.4.4
@@ -514,7 +318,6 @@ nest-asyncio==1.5.6
     #   notebook
 nodeenv==1.7.0
     # via pre-commit
-<<<<<<< HEAD
 notebook==6.4.12
     # via jupyterlab
 notebook-shim==0.1.0
@@ -562,46 +365,8 @@ paramiko==2.11.0
     #   gradio
 parso==0.8.3
     # via jedi
-||||||| 7b8bb53
-=======
-numpy==1.21.6
-    # via
-    #   -c requirements/prod.txt
-    #   -r requirements/dev.in
-    #   gradio
-    #   matplotlib
-    #   open3d
-    #   opencv-python
-    #   pandas
-    #   pyquaternion
-    #   scikit-learn
-    #   scipy
-    #   torchvision
-open3d==0.15.1
-    # via -r requirements/dev.in
-opencv-python==4.6.0.66
-    # via -r requirements/dev.in
-orjson==3.8.0
-    # via
-    #   -c requirements/prod.txt
-    #   gradio
-packaging==21.3
-    # via
-    #   -c requirements/prod.txt
-    #   matplotlib
-pandas==1.3.5
-    # via
-    #   -c requirements/prod.txt
-    #   gradio
-    #   open3d
-paramiko==2.11.0
-    # via
-    #   -c requirements/prod.txt
-    #   gradio
->>>>>>> 88ac98d3c8127d97e3823caeff0a3d0c02422b88
 pathspec==0.10.1
     # via black
-<<<<<<< HEAD
 pickleshare==0.7.5
     # via ipython
 pillow==9.2.0
@@ -613,24 +378,12 @@ pillow==9.2.0
     #   torchvision
 pkgutil-resolve-name==1.3.10
     # via jsonschema
-||||||| 7b8bb53
-=======
-pillow==9.2.0
-    # via
-    #   -c requirements/prod.txt
-    #   -r requirements/dev.in
-    #   gradio
-    #   matplotlib
-    #   open3d
-    #   torchvision
->>>>>>> 88ac98d3c8127d97e3823caeff0a3d0c02422b88
 platformdirs==2.5.2
     # via
     #   black
     #   virtualenv
 pre-commit==2.20.0
     # via -r requirements/dev.in
-<<<<<<< HEAD
 prometheus-client==0.14.1
     # via
     #   jupyter-server
@@ -699,55 +452,7 @@ pywinpty==2.0.8
     # via
     #   jupyter-server
     #   terminado
-||||||| 7b8bb53
-=======
-pycparser==2.21
-    # via
-    #   -c requirements/prod.txt
-    #   cffi
-pycryptodome==3.15.0
-    # via
-    #   -c requirements/prod.txt
-    #   gradio
-pydantic==1.10.2
-    # via
-    #   -c requirements/prod.txt
-    #   fastapi
-    #   gradio
-pydub==0.25.1
-    # via
-    #   -c requirements/prod.txt
-    #   gradio
-pynacl==1.5.0
-    # via
-    #   -c requirements/prod.txt
-    #   paramiko
-pyngrok==5.1.0
-    # via -r requirements/dev.in
-pyparsing==3.0.9
-    # via
-    #   -c requirements/prod.txt
-    #   matplotlib
-    #   packaging
-pyquaternion==0.9.9
-    # via open3d
-python-dateutil==2.8.2
-    # via
-    #   -c requirements/prod.txt
-    #   analytics-python
-    #   matplotlib
-    #   pandas
-python-multipart==0.0.5
-    # via
-    #   -c requirements/prod.txt
-    #   gradio
-pytz==2022.4
-    # via
-    #   -c requirements/prod.txt
-    #   pandas
->>>>>>> 88ac98d3c8127d97e3823caeff0a3d0c02422b88
 pyyaml==6.0
-<<<<<<< HEAD
     # via
     #   -c requirements\prod.txt
     #   gradio
@@ -824,69 +529,9 @@ threadpoolctl==3.1.0
     #   scikit-learn
 tinycss2==1.1.1
     # via nbconvert
-||||||| 7b8bb53
-    # via pre-commit
-=======
-    # via
-    #   -c requirements/prod.txt
-    #   gradio
-    #   open3d
-    #   pre-commit
-    #   pyngrok
-requests==2.28.1
-    # via
-    #   -c requirements/prod.txt
-    #   analytics-python
-    #   gradio
-    #   torchvision
-rfc3986[idna2008]==1.5.0
-    # via
-    #   -c requirements/prod.txt
-    #   httpx
-scikit-learn==1.0.2
-    # via
-    #   -c requirements/prod.txt
-    #   open3d
-    #   sklearn
-scipy==1.7.3
-    # via
-    #   -c requirements/prod.txt
-    #   -r requirements/dev.in
-    #   scikit-learn
-shapely==1.8.4
-    # via
-    #   -c requirements/prod.txt
-    #   -r requirements/dev.in
-six==1.16.0
-    # via
-    #   -c requirements/prod.txt
-    #   analytics-python
-    #   paramiko
-    #   python-dateutil
-    #   python-multipart
-sklearn==0.0
-    # via
-    #   -c requirements/prod.txt
-    #   -r requirements/dev.in
-sniffio==1.3.0
-    # via
-    #   -c requirements/prod.txt
-    #   anyio
-    #   httpcore
-    #   httpx
-starlette==0.20.4
-    # via
-    #   -c requirements/prod.txt
-    #   fastapi
-threadpoolctl==3.1.0
-    # via
-    #   -c requirements/prod.txt
-    #   scikit-learn
->>>>>>> 88ac98d3c8127d97e3823caeff0a3d0c02422b88
 toml==0.10.2
     # via pre-commit
 tomli==2.0.1
-<<<<<<< HEAD
     # via
     #   black
     #   jupyterlab
@@ -924,42 +569,17 @@ traitlets==5.4.0
     #   nbconvert
     #   nbformat
     #   notebook
-||||||| 7b8bb53
-    # via black
-=======
-    # via black
-torch==1.12.1
-    # via
-    #   -c requirements/prod.txt
-    #   -r requirements/dev.in
-    #   torchvision
-torchvision==0.13.1
-    # via -r requirements/dev.in
-tqdm==4.64.1
-    # via
-    #   -r requirements/dev.in
-    #   open3d
->>>>>>> 88ac98d3c8127d97e3823caeff0a3d0c02422b88
 typed-ast==1.5.4
     # via black
 typing-extensions==4.3.0
     # via
-<<<<<<< HEAD
     #   -c requirements\prod.txt
     #   aiohttp
     #   anyio
     #   argon2-cffi
     #   async-timeout
-||||||| 7b8bb53
-=======
-    #   -c requirements/prod.txt
-    #   aiohttp
-    #   anyio
-    #   async-timeout
->>>>>>> 88ac98d3c8127d97e3823caeff0a3d0c02422b88
     #   black
     #   importlib-metadata
-<<<<<<< HEAD
     #   jsonschema
     #   kiwisolver
     #   markdown-it-py
@@ -981,32 +601,8 @@ uvicorn==0.18.3
     # via
     #   -c requirements\prod.txt
     #   gradio
-||||||| 7b8bb53
-=======
-    #   kiwisolver
-    #   markdown-it-py
-    #   pydantic
-    #   starlette
-    #   torch
-    #   torchvision
-    #   uvicorn
-    #   yarl
-uc-micro-py==1.0.1
-    # via
-    #   -c requirements/prod.txt
-    #   linkify-it-py
-urllib3==1.26.12
-    # via
-    #   -c requirements/prod.txt
-    #   requests
-uvicorn==0.18.3
-    # via
-    #   -c requirements/prod.txt
-    #   gradio
->>>>>>> 88ac98d3c8127d97e3823caeff0a3d0c02422b88
 virtualenv==20.16.5
     # via pre-commit
-<<<<<<< HEAD
 wcwidth==0.2.5
     # via prompt-toolkit
 webencodings==0.5.1
@@ -1025,42 +621,17 @@ wheel==0.37.1
     #   open3d
 widgetsnbextension==4.0.3
     # via ipywidgets
-||||||| 7b8bb53
-=======
-websockets==10.3
-    # via
-    #   -c requirements/prod.txt
-    #   gradio
-wheel==0.37.1
-    # via open3d
->>>>>>> 88ac98d3c8127d97e3823caeff0a3d0c02422b88
 wincertstore==0.2
     # via -r requirements/dev.in
-<<<<<<< HEAD
 yarl==1.8.1
     # via
     #   -c requirements\prod.txt
     #   aiohttp
-||||||| 7b8bb53
-=======
-yarl==1.8.1
-    # via
-    #   -c requirements/prod.txt
-    #   aiohttp
->>>>>>> 88ac98d3c8127d97e3823caeff0a3d0c02422b88
 zipp==3.8.1
-<<<<<<< HEAD
     # via
     #   -c requirements\prod.txt
     #   importlib-metadata
     #   importlib-resources
-||||||| 7b8bb53
-    # via importlib-metadata
-=======
-    # via
-    #   -c requirements/prod.txt
-    #   importlib-metadata
->>>>>>> 88ac98d3c8127d97e3823caeff0a3d0c02422b88
 
 # The following packages are considered to be unsafe in a requirements file:
 # setuptools

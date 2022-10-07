@@ -18,6 +18,7 @@ import json
 from pathlib import Path
 import sys
 
+sys.path.append("../horizon_net/")
 from misc import post_proc
 import numpy as np
 from PIL import Image
@@ -25,7 +26,7 @@ from scipy.ndimage.filters import maximum_filter
 from shapely.geometry import Polygon
 import torch
 
-sys.path.append("../horizon_net/")
+
 STAGED_MODEL_DIRNAME = Path(__file__).resolve().parent
 IMAGE_DIRNAME = Path(__file__).resolve().parent
 MODEL_FILE = "horizonNet.pt"
@@ -44,41 +45,6 @@ def find_N_peaks(signal, r=29, min_v=0.05, N=None):
     return pk_loc, signal[pk_loc]
 
 
-def augment(x_img, flip, rotate):
-    """Augment the data."""
-    x_img = x_img.numpy()
-    aug_type = [""]
-    x_imgs_augmented = [x_img]
-    if flip:
-        aug_type.append("flip")
-        x_imgs_augmented.append(np.flip(x_img, axis=-1))
-    for shift_p in rotate:
-        shift = int(round(shift_p * x_img.shape[-1]))
-        aug_type.append("rotate %d" % shift)
-        x_imgs_augmented.append(np.roll(x_img, shift, axis=-1))
-    return torch.FloatTensor(np.concatenate(x_imgs_augmented, 0)), aug_type
-
-
-def augment_undo(x_imgs_augmented, aug_type):
-    """Undo the augmentation."""
-    x_imgs_augmented = x_imgs_augmented.cpu().numpy()
-    sz = x_imgs_augmented.shape[0] // len(aug_type)
-    x_imgs = []
-    for i, aug in enumerate(aug_type):
-        x_img = x_imgs_augmented[i * sz : (i + 1) * sz]
-        if aug == "flip":
-            x_imgs.append(np.flip(x_img, axis=-1))
-        elif aug.startswith("rotate"):
-            shift = int(aug.split()[-1])
-            x_imgs.append(np.roll(x_img, -shift, axis=-1))
-        elif aug == "":
-            x_imgs.append(x_img)
-        else:
-            raise NotImplementedError()
-
-    return np.array(x_imgs)
-
-
 class horizonNet:
     """The class loads a torchscript model and does the prediction."""
 
@@ -95,14 +61,11 @@ class horizonNet:
         if img_pil.size != (1024, 512):
             img_pil = img_pil.resize((1024, 512), Image.BICUBIC)
         img_ori = np.array(img_pil)[..., :3].transpose([2, 0, 1]).copy()
-        x = torch.FloatTensor([img_ori / 255])
-
+        x = torch.FloatTensor(np.array([img_ori / 255]))
         H, W = tuple(x.shape[2:])
-
-        x, aug_type = augment(x, False, [])
         y_bon_, y_cor_ = self.model(x)
-        y_bon_ = augment_undo(y_bon_.cpu(), aug_type).mean(0)
-        y_cor_ = augment_undo(torch.sigmoid(y_cor_).cpu(), aug_type).mean(0)
+        y_bon_ = y_bon_.numpy()
+        y_cor_ = y_cor_.numpy()
 
         y_bon_ = (y_bon_[0] / np.pi + 0.5) * H - 0.5
         y_bon_[0] = np.clip(y_bon_[0], 1, H / 2 - 1)

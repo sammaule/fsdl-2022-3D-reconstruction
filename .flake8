@@ -20,7 +20,7 @@ mypy-init-return = true
 per-file-ignores =
   # list of case-by-case ignores, see files for details
   model/app.py:D100,D103
-extend-ignore = W503, E203, S605
+extend-ignore = W503, E203, S605, E402
 exclude =
   horizon_net/assets/*
   horizon_net/misc/*
