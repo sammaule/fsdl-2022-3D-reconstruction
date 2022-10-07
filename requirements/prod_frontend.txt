@@ -157,7 +157,7 @@ pydantic==1.10.2
     #   gradio
 pydub==0.25.1
     # via gradio
-pylsd==0.0.2
+pylsd-nova==1.2.0
     # via -r requirements/prod_frontend.in
 pynacl==1.5.0
     # via paramiko

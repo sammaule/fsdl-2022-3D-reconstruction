@@ -5,7 +5,7 @@ open3d==0.14.1  # See https://github.com/isl-org/Open3D/issues/4796 latest versi
 numpy
 pillow
 scipy
-pylsd
+pylsd-nova
 numpy
 shapely
 tqdm
