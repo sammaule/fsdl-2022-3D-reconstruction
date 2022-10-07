@@ -3,7 +3,7 @@ gradio
 requests
 open3d==0.14.1  # See https://github.com/isl-org/Open3D/issues/4796 latest version available on both MacOS and Linux
 numpy
-pillow
+Pillow
 scipy
 pylsd-nova
 numpy

@@ -2,16 +2,5 @@
 black
 pre-commit
 wincertstore
-gradio
-pyngrok
-torch
 torchvision
-numpy
-scipy
-sklearn
-Pillow
-tqdm
-shapely
 jupyter
-rootpath
-pylsd-nova
