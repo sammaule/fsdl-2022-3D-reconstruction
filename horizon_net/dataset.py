@@ -2,151 +2,152 @@ import os
 import numpy as np
 from PIL import Image
 from shapely.geometry import LineString
-from scipy.spatial.distance import cdist
 
-import torch
-import torch.utils.data as data
+# from scipy.spatial.distance import cdist
+
+# import torch
+# import torch.utils.data as data
 
 from horizon_net.misc import panostretch
 
 
-class PanoCorBonDataset(data.Dataset):
-    """
-    See README.md for how to prepare the dataset.
-    """
+# class PanoCorBonDataset(data.Dataset):
+#     """
+#     See README.md for how to prepare the dataset.
+#     """
 
-    def __init__(
-        self,
-        root_dir,
-        flip=False,
-        rotate=False,
-        gamma=False,
-        stretch=False,
-        p_base=0.96,
-        max_stretch=2.0,
-        normcor=False,
-        return_cor=False,
-        return_path=False,
-    ):
-        self.img_dir = os.path.join(root_dir, "img")
-        self.cor_dir = os.path.join(root_dir, "label_cor")
-        self.img_fnames = sorted(
-            [
-                fname
-                for fname in os.listdir(self.img_dir)
-                if fname.endswith(".jpg") or fname.endswith(".png")
-            ]
-        )
-        self.txt_fnames = ["%s.txt" % fname[:-4] for fname in self.img_fnames]
-        self.flip = flip
-        self.rotate = rotate
-        self.gamma = gamma
-        self.stretch = stretch
-        self.p_base = p_base
-        self.max_stretch = max_stretch
-        self.normcor = normcor
-        self.return_cor = return_cor
-        self.return_path = return_path
+#     def __init__(
+#         self,
+#         root_dir,
+#         flip=False,
+#         rotate=False,
+#         gamma=False,
+#         stretch=False,
+#         p_base=0.96,
+#         max_stretch=2.0,
+#         normcor=False,
+#         return_cor=False,
+#         return_path=False,
+#     ):
+#         self.img_dir = os.path.join(root_dir, "img")
+#         self.cor_dir = os.path.join(root_dir, "label_cor")
+#         self.img_fnames = sorted(
+#             [
+#                 fname
+#                 for fname in os.listdir(self.img_dir)
+#                 if fname.endswith(".jpg") or fname.endswith(".png")
+#             ]
+#         )
+#         self.txt_fnames = ["%s.txt" % fname[:-4] for fname in self.img_fnames]
+#         self.flip = flip
+#         self.rotate = rotate
+#         self.gamma = gamma
+#         self.stretch = stretch
+#         self.p_base = p_base
+#         self.max_stretch = max_stretch
+#         self.normcor = normcor
+#         self.return_cor = return_cor
+#         self.return_path = return_path
 
-        self._check_dataset()
+#         self._check_dataset()
 
-    def _check_dataset(self):
-        for fname in self.txt_fnames:
-            assert os.path.isfile(
-                os.path.join(self.cor_dir, fname)
-            ), "%s not found" % os.path.join(self.cor_dir, fname)
+#     def _check_dataset(self):
+#         for fname in self.txt_fnames:
+#             assert os.path.isfile(
+#                 os.path.join(self.cor_dir, fname)
+#             ), "%s not found" % os.path.join(self.cor_dir, fname)
 
-    def __len__(self):
-        return len(self.img_fnames)
+#     def __len__(self):
+#         return len(self.img_fnames)
 
-    def __getitem__(self, idx):
-        # Read image
-        img_path = os.path.join(self.img_dir, self.img_fnames[idx])
-        img = np.array(Image.open(img_path), np.float32)[..., :3] / 255.0
-        H, W = img.shape[:2]
+#     def __getitem__(self, idx):
+#         # Read image
+#         img_path = os.path.join(self.img_dir, self.img_fnames[idx])
+#         img = np.array(Image.open(img_path), np.float32)[..., :3] / 255.0
+#         H, W = img.shape[:2]
 
-        # Read ground truth corners
-        with open(os.path.join(self.cor_dir, self.txt_fnames[idx])) as f:
-            cor = np.array(
-                [line.strip().split() for line in f if line.strip()], np.float32
-            )
+#         # Read ground truth corners
+#         with open(os.path.join(self.cor_dir, self.txt_fnames[idx])) as f:
+#             cor = np.array(
+#                 [line.strip().split() for line in f if line.strip()], np.float32
+#             )
 
-            # Corner with minimum x should at the beginning
-            cor = np.roll(cor[:, :2], -2 * np.argmin(cor[::2, 0]), 0)
+#             # Corner with minimum x should at the beginning
+#             cor = np.roll(cor[:, :2], -2 * np.argmin(cor[::2, 0]), 0)
 
-            # Detect occlusion
-            occlusion = find_occlusion(cor[::2].copy()).repeat(2)
-            assert (np.abs(cor[0::2, 0] - cor[1::2, 0]) > W / 100).sum() == 0, img_path
-            assert (cor[0::2, 1] > cor[1::2, 1]).sum() == 0, img_path
+#             # Detect occlusion
+#             occlusion = find_occlusion(cor[::2].copy()).repeat(2)
+#             assert (np.abs(cor[0::2, 0] - cor[1::2, 0]) > W / 100).sum() == 0, img_path
+#             assert (cor[0::2, 1] > cor[1::2, 1]).sum() == 0, img_path
 
-        # Stretch augmentation
-        if self.stretch:
-            xmin, ymin, xmax, ymax = cor2xybound(cor)
-            kx = np.random.uniform(1.0, self.max_stretch)
-            ky = np.random.uniform(1.0, self.max_stretch)
-            if np.random.randint(2) == 0:
-                kx = max(1 / kx, min(0.5 / xmin, 1.0))
-            else:
-                kx = min(kx, max(10.0 / xmax, 1.0))
-            if np.random.randint(2) == 0:
-                ky = max(1 / ky, min(0.5 / ymin, 1.0))
-            else:
-                ky = min(ky, max(10.0 / ymax, 1.0))
-            img, cor = panostretch.pano_stretch(img, cor, kx, ky)
+#         # Stretch augmentation
+#         if self.stretch:
+#             xmin, ymin, xmax, ymax = cor2xybound(cor)
+#             kx = np.random.uniform(1.0, self.max_stretch)
+#             ky = np.random.uniform(1.0, self.max_stretch)
+#             if np.random.randint(2) == 0:
+#                 kx = max(1 / kx, min(0.5 / xmin, 1.0))
+#             else:
+#                 kx = min(kx, max(10.0 / xmax, 1.0))
+#             if np.random.randint(2) == 0:
+#                 ky = max(1 / ky, min(0.5 / ymin, 1.0))
+#             else:
+#                 ky = min(ky, max(10.0 / ymax, 1.0))
+#             img, cor = panostretch.pano_stretch(img, cor, kx, ky)
 
-        # Prepare 1d ceiling-wall/floor-wall boundary
-        bon = cor_2_1d(cor, H, W)
+#         # Prepare 1d ceiling-wall/floor-wall boundary
+#         bon = cor_2_1d(cor, H, W)
 
-        # Random flip
-        if self.flip and np.random.randint(2) == 0:
-            img = np.flip(img, axis=1)
-            bon = np.flip(bon, axis=1)
-            cor[:, 0] = img.shape[1] - 1 - cor[:, 0]
+#         # Random flip
+#         if self.flip and np.random.randint(2) == 0:
+#             img = np.flip(img, axis=1)
+#             bon = np.flip(bon, axis=1)
+#             cor[:, 0] = img.shape[1] - 1 - cor[:, 0]
 
-        # Random horizontal rotate
-        if self.rotate:
-            dx = np.random.randint(img.shape[1])
-            img = np.roll(img, dx, axis=1)
-            bon = np.roll(bon, dx, axis=1)
-            cor[:, 0] = (cor[:, 0] + dx) % img.shape[1]
+#         # Random horizontal rotate
+#         if self.rotate:
+#             dx = np.random.randint(img.shape[1])
+#             img = np.roll(img, dx, axis=1)
+#             bon = np.roll(bon, dx, axis=1)
+#             cor[:, 0] = (cor[:, 0] + dx) % img.shape[1]
 
-        # Random gamma augmentation
-        if self.gamma:
-            p = np.random.uniform(1, 2)
-            if np.random.randint(2) == 0:
-                p = 1 / p
-            img = img ** p
+#         # Random gamma augmentation
+#         if self.gamma:
+#             p = np.random.uniform(1, 2)
+#             if np.random.randint(2) == 0:
+#                 p = 1 / p
+#             img = img ** p
 
-        # Prepare 1d wall-wall probability
-        corx = cor[~occlusion, 0]
-        dist_o = cdist(corx.reshape(-1, 1), np.arange(img.shape[1]).reshape(-1, 1), p=1)
-        dist_r = cdist(
-            corx.reshape(-1, 1),
-            np.arange(img.shape[1]).reshape(-1, 1) + img.shape[1],
-            p=1,
-        )
-        dist_l = cdist(
-            corx.reshape(-1, 1),
-            np.arange(img.shape[1]).reshape(-1, 1) - img.shape[1],
-            p=1,
-        )
-        dist = np.min([dist_o, dist_r, dist_l], 0)
-        nearest_dist = dist.min(0)
-        y_cor = (self.p_base ** nearest_dist).reshape(1, -1)
+#         # Prepare 1d wall-wall probability
+#         corx = cor[~occlusion, 0]
+#         dist_o = cdist(corx.reshape(-1, 1), np.arange(img.shape[1]).reshape(-1, 1), p=1)
+#         dist_r = cdist(
+#             corx.reshape(-1, 1),
+#             np.arange(img.shape[1]).reshape(-1, 1) + img.shape[1],
+#             p=1,
+#         )
+#         dist_l = cdist(
+#             corx.reshape(-1, 1),
+#             np.arange(img.shape[1]).reshape(-1, 1) - img.shape[1],
+#             p=1,
+#         )
+#         dist = np.min([dist_o, dist_r, dist_l], 0)
+#         nearest_dist = dist.min(0)
+#         y_cor = (self.p_base ** nearest_dist).reshape(1, -1)
 
-        # Convert all data to tensor
-        x = torch.FloatTensor(img.transpose([2, 0, 1]).copy())
-        bon = torch.FloatTensor(bon.copy())
-        y_cor = torch.FloatTensor(y_cor.copy())
+#         # Convert all data to tensor
+#         x = torch.FloatTensor(img.transpose([2, 0, 1]).copy())
+#         bon = torch.FloatTensor(bon.copy())
+#         y_cor = torch.FloatTensor(y_cor.copy())
 
-        # Check whether additional output are requested
-        out_lst = [x, bon, y_cor]
-        if self.return_cor:
-            out_lst.append(cor)
-        if self.return_path:
-            out_lst.append(img_path)
+#         # Check whether additional output are requested
+#         out_lst = [x, bon, y_cor]
+#         if self.return_cor:
+#             out_lst.append(cor)
+#         if self.return_path:
+#             out_lst.append(img_path)
 
-        return out_lst
+#         return out_lst
 
 
 def cor_2_1d(cor, H, W):
