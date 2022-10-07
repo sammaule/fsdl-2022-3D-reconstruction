@@ -1,10 +1,13 @@
 """Entrypoint for the frontend application. Users can provide a panorama image and returns a 3D layout."""
 import logging
 import os
-from pathlib import Path
 
 import gradio as gr
-import requests
+
+# import open3d as o3d
+
+# from horizon_net.layout_viewer import convert_to_3D
+from horizon_net.preprocess import preprocess
 
 MODEL_URL = os.getenv("LAMBDA_FUNCTION_URL")
 SERVER_PORT = int(os.getenv("SERVER_PORT", 80))
@@ -40,10 +43,11 @@ class PredictorBackend:
         _type_
             HorizonNet model prediction of the 3D layout.
         """
+        processed_image = preprocess(image)
+
         logging.info(f"Sending image to backend at {self.model_url}")
-        pumpkin = str(Path(__file__).parent / "pumpkin.obj")
-        text = requests.get(self.model_url).text
-        return pumpkin, text
+
+        return processed_image
 
 
 def make_frontend(fn):
