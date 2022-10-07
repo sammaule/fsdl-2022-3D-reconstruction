@@ -1,4 +1,4 @@
 -c prod.txt dev.txt
 gradio
 requests
-open3d
+open3d==0.14.1

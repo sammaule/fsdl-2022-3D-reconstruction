@@ -118,10 +118,9 @@ numpy==1.21.6
     #   matplotlib
     #   open3d
     #   pandas
-    #   pyquaternion
     #   scikit-learn
     #   scipy
-open3d==0.15.1
+open3d==0.14.1
     # via -r requirements/prod_frontend.in
 orjson==3.8.0
     # via gradio
@@ -158,8 +157,6 @@ pyparsing==3.0.9
     #   -c requirements/prod.txt
     #   matplotlib
     #   packaging
-pyquaternion==0.9.9
-    # via open3d
 python-dateutil==2.8.2
     # via
     #   analytics-python
