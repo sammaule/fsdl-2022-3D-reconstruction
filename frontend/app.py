@@ -8,18 +8,13 @@ from io import BytesIO
 import json
 import logging
 import os
-from pathlib import Path
 from typing import Callable, TypeVar
 
-import cv2
-from dotenv import load_dotenv
 import gradio as gr
 from PIL.Image import Image
 import requests
 
 PB = TypeVar("PB", bound="PredictorBackend")
-
-load_dotenv()
 
 MODEL_URL = os.getenv("LAMBDA_FUNCTION_URL")
 
@@ -28,7 +23,7 @@ def main(model_url: str) -> None:
     """Run the frontend."""
     predictor = PredictorBackend(model_url)
     frontend = make_frontend(predictor.predict)
-    frontend.launch(share=True, server_port=5000)
+    frontend.launch(share=True, server_port=5001)
     # noqa: S104
 
 
@@ -46,14 +41,12 @@ class PredictorBackend:
     def predict(self: PB, image: Image) -> tuple:
         """Generate images from prediction."""
         logging.info(f"Sending image to backend at {self.model_url}")
-        pumpkin = str(Path(__file__).parent / "pumpkin.obj")
-        text = requests.get(self.model_url).text
 
-        self.send_images_to_aws_lambda(image)
+        response = self.send_images_to_aws_lambda(image)
 
-        return (pumpkin, text)
+        return response
 
-    def send_images_to_aws_lambda(self: PB, image: Image):
+    def send_images_to_aws_lambda(self: PB, image: Image) -> str:
         """Send images (encode to b64) to aws lambda function."""
         _buffer = BytesIO()  # bytes that live in memory
         image.save(_buffer, format="png")  # but which we write to like a file
@@ -64,32 +57,25 @@ class PredictorBackend:
 
         requests.post(self.model_url, data=data, headers=headers)
 
+        response = requests.get(self.model_url)
+
+        _content = (
+            response._content
+        )  # TypeError: a bytes-like object is required, not 'str'
+
+        return _content
+
 
 def make_frontend(fn: Callable[[Image], str]) -> gr.Interface:
     """Create the frontend for the application."""
+    clear_color = [0.0, 0.0, 0.0, 0.0]
+    label = "3D Layout"
     return gr.Interface(
         fn=fn,
         inputs=gr.components.Image(type="pil", label="Panorama"),
-        outputs=[
-            gr.Model3D(clear_color=[0.0, 0.0, 0.0, 0.0], label="3D Layout"),
-            gr.Textbox(label="Text"),
-        ],
+        outputs=[gr.Model3D(clear_color=clear_color, label=label)],
         title="3D Reconstruction",
         allow_flagging="never",
-    )
-
-
-def test_send_imgs():
-    """Test send img."""
-    # what's the value for MODEL_URL?
-    backend = PredictorBackend(MODEL_URL)
-    backend.send_images_to_aws_lambda(
-        cv2.imread(
-            (
-                "/Users/jhshi/Desktop/fsdl-2022-3D-reconstruction"
-                "/frontend/panoramic_room.png"
-            )
-        )
     )
 
 
