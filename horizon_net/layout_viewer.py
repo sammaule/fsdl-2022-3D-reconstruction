@@ -1,5 +1,4 @@
 """
-
 The module produces a 3D layout .obj object from the model's prediction and an aligned image.
 Source: assessed on 04/10/2022 from:
 https://github.com/sunset1995/HorizonNet/blob/master/layout_viewer.py
@@ -31,7 +30,6 @@ def convert_to_3D(aligned_image, inferenced_result):
     mesh : open3d.geometry.TriangleMesh
         3D mesh of reconstructed model prediction.
     """
-
     equirect_texture = np.array(aligned_image)
     H, W = equirect_texture.shape[:2]
 
