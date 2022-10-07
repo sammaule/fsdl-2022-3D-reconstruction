@@ -2,6 +2,7 @@
 black
 pre-commit
 wincertstore
+<<<<<<< HEAD
 gradio
 pyngrok
 torch
@@ -15,3 +16,18 @@ opencv-python
 open3d
 shapely
 pylsd-nova
+||||||| 7b8bb53
+=======
+gradio
+pyngrok
+torch
+torchvision
+numpy
+scipy
+sklearn
+Pillow
+tqdm
+opencv-python
+open3d
+shapely
+>>>>>>> 88ac98d3c8127d97e3823caeff0a3d0c02422b88
