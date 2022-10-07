@@ -4,3 +4,5 @@ scipy
 Pillow
 shapely
 sklearn
+smart-open
+rootpath

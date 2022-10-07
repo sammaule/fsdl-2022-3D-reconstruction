@@ -4,6 +4,39 @@
 #
 #    pip-compile requirements/prod.in
 #
+blessings==1.7
+    # via colour-runner
+certifi==2022.9.24
+    # via requests
+charset-normalizer==2.1.1
+    # via requests
+codecov==2.1.12
+    # via rootpath
+coloredlogs==15.0.1
+    # via rootpath
+colour-runner==0.1.1
+    # via rootpath
+coverage==6.5.0
+    # via
+    #   codecov
+    #   rootpath
+deepdiff==5.8.1
+    # via rootpath
+distlib==0.3.6
+    # via virtualenv
+filelock==3.8.0
+    # via
+    #   tox
+    #   virtualenv
+humanfriendly==10.0
+    # via coloredlogs
+idna==3.4
+    # via requests
+importlib-metadata==5.0.0
+    # via
+    #   pluggy
+    #   tox
+    #   virtualenv
 joblib==1.2.0
     # via scikit-learn
 numpy==1.21.6
@@ -11,7 +44,27 @@ numpy==1.21.6
     #   -r requirements/prod.in
     #   scikit-learn
     #   scipy
+ordered-set==4.1.0
+    # via deepdiff
+packaging==21.3
+    # via tox
 pillow==9.2.0
+    # via -r requirements/prod.in
+platformdirs==2.5.2
+    # via virtualenv
+pluggy==1.0.0
+    # via tox
+py==1.11.0
+    # via tox
+pygments==2.13.0
+    # via
+    #   colour-runner
+    #   rootpath
+pyparsing==3.0.9
+    # via packaging
+requests==2.28.1
+    # via codecov
+rootpath==0.1.1
     # via -r requirements/prod.in
 scikit-learn==1.0.2
     # via sklearn
@@ -21,11 +74,32 @@ scipy==1.7.3
     #   scikit-learn
 shapely==1.8.4
     # via -r requirements/prod.in
+six==1.16.0
+    # via
+    #   blessings
+    #   rootpath
+    #   tox
 sklearn==0.0
     # via -r requirements/prod.in
+smart-open==6.2.0
+    # via -r requirements/prod.in
+termcolor==2.0.1
+    # via rootpath
 threadpoolctl==3.1.0
     # via scikit-learn
+tomli==2.0.1
+    # via tox
 torch==1.12.1
     # via -r requirements/prod.in
-typing-extensions==4.3.0
-    # via torch
+tox==3.26.0
+    # via rootpath
+typing-extensions==4.4.0
+    # via
+    #   importlib-metadata
+    #   torch
+urllib3==1.26.12
+    # via requests
+virtualenv==20.16.5
+    # via tox
+zipp==3.8.1
+    # via importlib-metadata

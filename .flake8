@@ -1,6 +1,14 @@
 [flake8]
 select = B,B9,BLK,C,D,E,F,I,S,W
   # only check selected error codes
+  # E501 - flake8 -- line length too long, actually handled by black
+extend-ignore =
+  # ANN - flake8-annotations type annotation check
+    ANN,ANN002,ANN003,ANN101,ANN102,ANN202,  # ignore all for now, but always ignore some
+  # S - flake8-bandit safety check
+    S101,S311,S105,  # assert removed in bytecode, pRNG not secure, hardcoded password
+  # D2 D4 - flake8-docstrings docstring style check
+    D401  #first line content
 application-import-names = horizon_net
   # flake8-import-order: which names are first party?
 import-order-style = google
@@ -19,7 +27,9 @@ mypy-init-return = true
   # flake8-annotations: do we allow init to have no return annotation?
 per-file-ignores =
   # list of case-by-case ignores, see files for details
-  model/app.py:D100,D103
+  */__init__.py:F401,I
+  horizon_net/horizonnet_reconstruction.py:D301,W605,D400,W605,S108,S310,E203,D103
+  model/app.py:D100,D103,ANN001,ANN201
 exclude =
   horizon_net/assets/*
   horizon_net/misc/*
