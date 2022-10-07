@@ -1,48 +1,24 @@
-To update installs in requirements >> dev.in
-$ make pip-tools
+## :wrench: Developer set up
 
-To launch simple gradio app locally, open a terminal and run
-$ cd path/to/fsdl-2022-3D-reconstruction/frontend/
-$ python3 make_gradio.py
+Follow the instructions in the main README.md to activate the conda environment for the project.
 
-The output looks something like this:
-<!--
-    Running on local URL:  http://127.0.0.1:31726
-    Running on public URL: https://11219.gradio.app
+To run the frontend locally, define a couple of environment variables.
+Set the lambda function url environment variable to send requests to the HorizonNet model.
+Also get the server port equal to some value e.g. 5000 otherwise it will default to 80 which is unavailable locally.
 
-    This share link expires in 72 hours. For free permanent hosting, check out Spaces: https://huggingface.co/spaces
--->
+```bash
+$ export LAMBDA_FUNCTION_URL=<insert lambda function url>
+$ export SERVER_PORT=5001
+```
 
-Firstime using ngrok, set up token via https://dashboard.ngrok.com/auth.
-Create text file called ngrok_token.py.
-Open that file and save the auth token into it.
-Open seperate terminal and run:
-$ python3 init_token.py
+The frontend can then be viewed by running:
 
-To connect with ngrok,
-copy GRADIO_SERVER_PORT (which is the 5-digit-number stored in server_port.txt),
-open a seperate terminal and run
-$ ngrok http GRADIO_SERVER_PORT
+```bash
+$ python frontend/app.py
+```
 
-The output looks something like this:
-% ngrok by @inconshreveable                                                                           (Ctrl+C to quit)
+## :cloud: Deployment to AWS
 
-% Session Status                online
-% Account                       Junhui Shi (Plan: Free)
-% Version                       2.3.40
-% Region                        United States (us)
-% Web Interface                 http://127.0.0.1:4040
-% Forwarding                    http://298d-135-180-64-66.ngrok.io -> http://localhost:31726
-% Forwarding                    https://298d-135-180-64-66.ngrok.io -> http://localhost:31726
+TODO: Will update this README with instructions on how to deploy the frontend once it is available.
 
-% Connections                   ttl     opn     rt1     rt5     p50     p90
-%                               2       0       0.00    0.00    6.17    6.31
-
-% HTTP Requests
-% -------------
-
-% POST /api/predict/             200 OK
-% GET  /favicon.ico              200 OK
-% GET  /                         200 OK
-
-Go to the https (.ngrok.io) and see the simple gradio app.
+For issues with docker on EC2 see [this forum](https://forums.docker.com/t/failure-to-start-docker-on-an-amazon-linux-machine/44003/16) for help.
