@@ -1,6 +1,6 @@
 """
-The module produces a 3D layout .obj object from the model's prediction
-and an aligned image.
+
+The module produces a 3D layout .obj object from the model's prediction and an aligned image.
 Source: assessed on 04/10/2022 from:
 https://github.com/sunset1995/HorizonNet/blob/master/layout_viewer.py
 
@@ -8,14 +8,29 @@ It is modified to return a 3D layout .obj object.
 """
 import numpy as np
 import open3d as o3d
-from scipy.signal import correlate2d
 from scipy.ndimage import shift
+from scipy.signal import correlate2d
+
 
 from horizon_net.eval_general import layout_2_depth
 from horizon_net.misc.post_proc import np_coorx2u, np_coory2v
 
 
 def convert_to_3D(aligned_image, inferenced_result):
+    """Generates 3D mesh from the model's prediction and original image.
+
+    Parameters
+    ----------
+    aligned_image :
+        Original panorama image.
+    inferenced_result : dict
+        The HorizonNet model's prediction.
+
+    Returns
+    -------
+    mesh : open3d.geometry.TriangleMesh
+        3D mesh of reconstructed model prediction.
+    """
 
     equirect_texture = np.array(aligned_image)
     H, W = equirect_texture.shape[:2]
@@ -24,9 +39,7 @@ def convert_to_3D(aligned_image, inferenced_result):
     cor_id[:, 0] *= W
     cor_id[:, 1] *= H
     # Convert corners to layout
-    depth, floor_mask, ceil_mask, wall_mask = layout_2_depth(
-        cor_id, H, W, return_mask=True
-    )
+    depth, floor_mask, ceil_mask, _ = layout_2_depth(cor_id, H, W, return_mask=True)
     coorx, coory = np.meshgrid(np.arange(W), np.arange(H))
     us = np_coorx2u(coorx, W)
     vs = np_coory2v(coory, H)

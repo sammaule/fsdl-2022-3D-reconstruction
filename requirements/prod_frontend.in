@@ -10,3 +10,4 @@ numpy
 shapely
 tqdm
 sklearn
+opencv-python
