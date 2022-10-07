@@ -20,5 +20,6 @@ ENV LAMBDA_FUNCTION_URL=$LAMBDA_FUNCTION_URL
 # Copy only the relevant directories
 #   note that we use a .dockerignore file to avoid copying logs etc.
 COPY frontend/ ./frontend
+COPY horizon_net/ ./horizon_net
 
 ENTRYPOINT ["python3", "frontend/app.py"]

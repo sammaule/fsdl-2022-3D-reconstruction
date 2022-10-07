@@ -42,8 +42,11 @@ joblib==1.2.0
 numpy==1.21.6
     # via
     #   -r requirements/prod.in
+    #   opencv-python
     #   scikit-learn
     #   scipy
+opencv-python==4.6.0.66
+    # via -r requirements/prod.in
 ordered-set==4.1.0
     # via deepdiff
 packaging==21.3

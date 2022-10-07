@@ -4,17 +4,10 @@ https://github.com/sunset1995/HorizonNet/blob/master/preprocess.py
 
 It is modified to return an aligned paronama image for the model.
 """
-
-import os
-import glob
-import argparse
 import numpy as np
 from PIL import Image
-import sys
 
-sys.path.append("../horizon_net/")
-
-from misc.pano_lsd_align import panoEdgeDetection, rotatePanorama
+from horizon_net.misc.pano_lsd_align import panoEdgeDetection, rotatePanorama
 
 
 def preprocess(img):

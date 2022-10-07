@@ -4,17 +4,14 @@ from io import BytesIO
 import json
 import logging
 import os
-from typing import TypeVar
 
 import gradio as gr
-from PIL.Image import Image
+import open3d as o3d
 import requests
 
-# import open3d as o3d
-# from horizon_net.layout_viewer import convert_to_3D
+from horizon_net.layout_viewer import convert_to_3D
 from horizon_net.preprocess import preprocess
 
-PB = TypeVar("PB", bound="PredictorBackend")
 
 MODEL_URL = os.getenv("LAMBDA_FUNCTION_URL")
 SERVER_PORT = int(os.getenv("SERVER_PORT", 80))
@@ -53,12 +50,14 @@ class PredictorBackend:
         processed_image = preprocess(image)
 
         logging.info(f"Sending image to backend at {self.model_url}")
-        response = send_images_to_aws_lambda(processed_image)
+        response = send_images_to_aws_lambda(processed_image, self.model_url)
 
-        return response
+        mesh = convert_to_3D(processed_image, response)
+        o3d.io.write_triangle_mesh("3D_object.obj", mesh, write_triangle_uvs=True)
+        return "3D_object.obj"
 
 
-def send_images_to_aws_lambda(self: PB, image: Image) -> str:
+def send_images_to_aws_lambda(image, model_url):
     """Send images (encode to b64) to aws lambda function."""
     _buffer = BytesIO()  # bytes that live in memory
     image.save(_buffer, format="png")  # but which we write to like a file
@@ -67,15 +66,9 @@ def send_images_to_aws_lambda(self: PB, image: Image) -> str:
     headers = {"Content-type": "application/json"}
     data = json.dumps({"image": "data:image/png;base64," + encoded_image})
 
-    requests.post(self.model_url, data=data, headers=headers)
+    response = requests.post(model_url, data=data, headers=headers)
 
-    response = requests.get(self.model_url)
-
-    _content = (
-        response._content
-    )  # TypeError: a bytes-like object is required, not 'str'
-
-    return _content
+    return response.json()
 
 
 def make_frontend(fn):
@@ -83,10 +76,7 @@ def make_frontend(fn):
     return gr.Interface(
         fn=fn,
         inputs=gr.components.Image(type="pil", label="Panorama"),
-        outputs=[
-            gr.Model3D(clear_color=[0.0, 0.0, 0.0, 0.0], label="3D Layout"),
-            gr.Textbox(label="Text"),
-        ],
+        outputs=[gr.Model3D(clear_color=[0.0, 0.0, 0.0, 0.0], label="3D Layout")],
         title="3D Reconstruction",
         allow_flagging="never",
     )

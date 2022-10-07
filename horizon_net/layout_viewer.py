@@ -6,19 +6,13 @@ https://github.com/sunset1995/HorizonNet/blob/master/layout_viewer.py
 
 It is modified to return a 3D layout .obj object.
 """
-import sys
-
-sys.path.append("../horizon_net/")
-
-import json
 import numpy as np
 import open3d as o3d
-from PIL import Image
 from scipy.signal import correlate2d
 from scipy.ndimage import shift
 
-from misc.post_proc import np_coor2xy, np_coorx2u, np_coory2v
-from eval_general import layout_2_depth
+from horizon_net.eval_general import layout_2_depth
+from horizon_net.misc.post_proc import np_coorx2u, np_coory2v
 
 
 def convert_to_3D(aligned_image, inferenced_result):

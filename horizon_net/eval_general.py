@@ -1,14 +1,12 @@
-import os
 import json
-import glob
 import argparse
 import numpy as np
 from tqdm import tqdm
 from shapely.geometry import Polygon
 
-from eval_cuboid import prepare_gtdt_pairs
-from dataset import cor_2_1d
-from misc import post_proc
+from horizon_net.eval_cuboid import prepare_gtdt_pairs
+from horizon_net.dataset import cor_2_1d
+from horizon_net.misc import post_proc
 
 
 def layout_2_depth(cor_id, h, w, return_mask=False):

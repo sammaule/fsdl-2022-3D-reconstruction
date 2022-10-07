@@ -6,3 +6,4 @@ shapely
 sklearn
 smart-open
 rootpath
+opencv-python

@@ -10,7 +10,7 @@ from tqdm import tqdm
 from scipy.spatial import HalfspaceIntersection
 from scipy.spatial import ConvexHull
 
-from misc import post_proc, panostretch
+from horizon_net.misc import post_proc, panostretch
 
 
 def tri2halfspace(pa, pb, p):
