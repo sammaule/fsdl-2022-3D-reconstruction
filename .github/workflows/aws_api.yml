@@ -1,5 +1,5 @@
 # Pushes API image to AWS ECR then deploys to AWS lambda
-name: Push to AWS ECR
+name: Deploy lambda function
 
 on:
   push:
@@ -13,7 +13,7 @@ env:
 
 jobs:
   deploy:
-    name: Deploy
+    name: Deploy API
     runs-on: ubuntu-latest
     environment: production
 
@@ -48,6 +48,6 @@ jobs:
       - name: Update Lambda function with latest ECR image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          IMAGE_TAG: latest
+          IMAGE_TAG: ${{ github.sha }}
         run:
           aws lambda update-function-code --function-name $LAMBDA_NAME --image-uri $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG

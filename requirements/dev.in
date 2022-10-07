@@ -14,4 +14,6 @@ tqdm
 opencv-python
 open3d
 shapely
+jupyter
+rootpath
 pylsd-nova
