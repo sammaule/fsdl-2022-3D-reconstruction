@@ -78,7 +78,9 @@ def make_frontend(fn):
         examples=["frontend/demos/demo1.png", "frontend/demos/demo2.jpg"],
         inputs=gr.components.Image(type="pil", label="Panorama"),
         outputs=gr.Model3D(clear_color=[0.0, 0.0, 0.0, 0.0], label="3D Layout"),
-        title="3D Reconstruction",
+        title="🏠 3D Room Reconstruction",
+        description="This demo uses HorizonNet to create 3D room reconstructions from 2D panorama images.",
+        article="A 2022 FSDL project 🥞",
         allow_flagging="never",
     )
 
