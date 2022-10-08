@@ -77,7 +77,7 @@ def make_frontend(fn):
         fn=fn,
         examples=["frontend/demos/demo1.png", "frontend/demos/demo2.jpg"],
         inputs=gr.components.Image(type="pil", label="Panorama"),
-        outputs=[gr.Model3D(clear_color=[0.0, 0.0, 0.0, 0.0], label="3D Layout")],
+        outputs=gr.Model3D(clear_color=[0.0, 0.0, 0.0, 0.0], label="3D Layout"),
         title="3D Reconstruction",
         allow_flagging="never",
     )
