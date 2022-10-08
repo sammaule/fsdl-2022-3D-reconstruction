@@ -69,7 +69,7 @@ importlib-metadata==5.0.0
     #   nbformat
     #   pre-commit
     #   virtualenv
-importlib-resources==5.9.0
+importlib-resources==5.10.0
     # via jsonschema
 ipykernel==6.16.0
     # via
