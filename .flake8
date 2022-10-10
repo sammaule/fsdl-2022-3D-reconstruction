@@ -8,13 +8,14 @@ extend-ignore =
   # S - flake8-bandit safety check
     S101,S311,S105,  # assert removed in bytecode, pRNG not secure, hardcoded password
   # D2 D4 - flake8-docstrings docstring style check
-    D401  #first line content
+    D401,  #first line content
+    W503, E203, S605, E402
 application-import-names = horizon_net
   # flake8-import-order: which names are first party?
 import-order-style = google
   # flake8-import-order: which import order style guide do we use?
 docstring-convention = numpy
-  # flake8-docstrings: which docstring style guide do we use?
+  # flake8-docstrings: whch docstring style guide do we use?
 strictness = short
   # darglint: how "strict" are we with docstring completeness?
 docstring-style = numpy
@@ -33,3 +34,9 @@ per-file-ignores =
 exclude =
   horizon_net/assets/*
   horizon_net/misc/*
+  horizon_net/dataset.py
+  horizon_net/eval_cuboid.py
+  horizon_net/preprocess.py
+  horizon_net/model.py
+  horizon_net/eval_general.py
+  horizon_net/layout_viewer.py

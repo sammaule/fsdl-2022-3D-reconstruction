@@ -4,18 +4,6 @@
 #
 #    pip-compile requirements/dev.in
 #
-addict==2.4.0
-    # via open3d
-aiohttp==3.8.3
-    # via gradio
-aiosignal==1.2.0
-    # via aiohttp
-analytics-python==1.4.0
-    # via gradio
-anyio==3.6.1
-    # via
-    #   httpcore
-    #   starlette
 appnope==0.1.3
     # via
     #   ipykernel
@@ -24,81 +12,34 @@ argon2-cffi==21.3.0
     # via notebook
 argon2-cffi-bindings==21.2.0
     # via argon2-cffi
-async-timeout==4.0.2
-    # via aiohttp
-asynctest==0.13.0
-    # via aiohttp
 attrs==22.1.0
-    # via
-    #   aiohttp
-    #   jsonschema
+    # via jsonschema
 backcall==0.2.0
     # via ipython
-backoff==1.10.0
-    # via analytics-python
-bcrypt==4.0.0
-    # via paramiko
 beautifulsoup4==4.11.1
     # via nbconvert
 black==22.10.0
     # via -r requirements/dev.in
 bleach==5.0.1
     # via nbconvert
-blessings==1.7
-    # via
-    #   -c requirements/prod.txt
-    #   colour-runner
 certifi==2022.9.24
     # via
     #   -c requirements/prod.txt
-    #   httpcore
-    #   httpx
     #   requests
 cffi==1.15.1
-    # via
-    #   argon2-cffi-bindings
-    #   cryptography
-    #   pynacl
+    # via argon2-cffi-bindings
 cfgv==3.3.1
     # via pre-commit
 charset-normalizer==2.1.1
     # via
     #   -c requirements/prod.txt
-    #   aiohttp
     #   requests
 click==8.1.3
-    # via
-    #   black
-    #   uvicorn
-codecov==2.1.12
-    # via
-    #   -c requirements/prod.txt
-    #   rootpath
-coloredlogs==15.0.1
-    # via
-    #   -c requirements/prod.txt
-    #   rootpath
-colour-runner==0.1.1
-    # via
-    #   -c requirements/prod.txt
-    #   rootpath
-coverage==6.5.0
-    # via
-    #   -c requirements/prod.txt
-    #   codecov
-    #   rootpath
-cryptography==38.0.1
-    # via paramiko
-cycler==0.11.0
-    # via matplotlib
+    # via black
 debugpy==1.6.3
     # via ipykernel
 decorator==5.1.1
     # via ipython
-deepdiff==5.8.1
-    # via
-    #   -c requirements/prod.txt
-    #   rootpath
 defusedxml==0.7.1
     # via nbconvert
 distlib==0.3.6
@@ -107,49 +48,18 @@ distlib==0.3.6
     #   virtualenv
 entrypoints==0.4
     # via jupyter-client
-fastapi==0.85.0
-    # via gradio
 fastjsonschema==2.16.2
     # via nbformat
-ffmpy==0.3.0
-    # via gradio
 filelock==3.8.0
     # via
     #   -c requirements/prod.txt
-    #   tox
     #   virtualenv
-fonttools==4.37.4
-    # via matplotlib
-frozenlist==1.3.1
-    # via
-    #   aiohttp
-    #   aiosignal
-fsspec==2022.8.2
-    # via gradio
-gradio==3.4
-    # via -r requirements/dev.in
-h11==0.12.0
-    # via
-    #   gradio
-    #   httpcore
-    #   uvicorn
-httpcore==0.15.0
-    # via httpx
-httpx==0.23.0
-    # via gradio
-humanfriendly==10.0
-    # via
-    #   -c requirements/prod.txt
-    #   coloredlogs
 identify==2.5.6
     # via pre-commit
 idna==3.4
     # via
     #   -c requirements/prod.txt
-    #   anyio
     #   requests
-    #   rfc3986
-    #   yarl
 importlib-metadata==5.0.0
     # via
     #   -c requirements/prod.txt
@@ -157,11 +67,9 @@ importlib-metadata==5.0.0
     #   jsonschema
     #   nbconvert
     #   nbformat
-    #   pluggy
     #   pre-commit
-    #   tox
     #   virtualenv
-importlib-resources==5.9.0
+importlib-resources==5.10.0
     # via jsonschema
 ipykernel==6.16.0
     # via
@@ -185,13 +93,8 @@ jedi==0.18.1
     # via ipython
 jinja2==3.1.2
     # via
-    #   gradio
     #   nbconvert
     #   notebook
-joblib==1.2.0
-    # via
-    #   -c requirements/prod.txt
-    #   scikit-learn
 jsonschema==4.16.0
     # via nbformat
 jupyter==1.0.0
@@ -216,38 +119,16 @@ jupyterlab-pygments==0.2.2
     # via nbconvert
 jupyterlab-widgets==3.0.3
     # via ipywidgets
-kiwisolver==1.4.4
-    # via matplotlib
-linkify-it-py==1.0.3
-    # via markdown-it-py
-markdown-it-py[linkify,plugins]==2.1.0
-    # via
-    #   gradio
-    #   mdit-py-plugins
 markupsafe==2.1.1
     # via
     #   jinja2
     #   nbconvert
-matplotlib==3.5.3
-    # via
-    #   gradio
-    #   open3d
 matplotlib-inline==0.1.6
     # via
     #   ipykernel
     #   ipython
-mdit-py-plugins==0.3.1
-    # via markdown-it-py
-mdurl==0.1.2
-    # via markdown-it-py
 mistune==2.0.4
     # via nbconvert
-monotonic==1.6
-    # via analytics-python
-multidict==6.0.2
-    # via
-    #   aiohttp
-    #   yarl
 mypy-extensions==0.4.3
     # via black
 nbclient==0.7.0
@@ -274,42 +155,15 @@ notebook==6.4.12
 numpy==1.21.6
     # via
     #   -c requirements/prod.txt
-    #   -r requirements/dev.in
-    #   gradio
-    #   matplotlib
-    #   open3d
-    #   opencv-python
-    #   pandas
-    #   pyquaternion
-    #   scikit-learn
-    #   scipy
     #   torchvision
-open3d==0.15.1
-    # via -r requirements/dev.in
-opencv-python==4.6.0.66
-    # via -r requirements/dev.in
-ordered-set==4.1.0
-    # via
-    #   -c requirements/prod.txt
-    #   deepdiff
-orjson==3.8.0
-    # via gradio
 packaging==21.3
     # via
     #   -c requirements/prod.txt
     #   ipykernel
-    #   matplotlib
     #   nbconvert
     #   qtpy
-    #   tox
-pandas==1.3.5
-    # via
-    #   gradio
-    #   open3d
 pandocfilters==1.5.0
     # via nbconvert
-paramiko==2.11.0
-    # via gradio
 parso==0.8.3
     # via jedi
 pathspec==0.10.1
@@ -321,10 +175,6 @@ pickleshare==0.7.5
 pillow==9.2.0
     # via
     #   -c requirements/prod.txt
-    #   -r requirements/dev.in
-    #   gradio
-    #   matplotlib
-    #   open3d
     #   torchvision
 pkgutil-resolve-name==1.3.10
     # via jsonschema
@@ -333,10 +183,6 @@ platformdirs==2.5.2
     #   -c requirements/prod.txt
     #   black
     #   virtualenv
-pluggy==1.0.0
-    # via
-    #   -c requirements/prod.txt
-    #   tox
 pre-commit==2.20.0
     # via -r requirements/dev.in
 prometheus-client==0.14.1
@@ -351,58 +197,25 @@ ptyprocess==0.7.0
     # via
     #   pexpect
     #   terminado
-py==1.11.0
-    # via
-    #   -c requirements/prod.txt
-    #   tox
 pycparser==2.21
     # via cffi
-pycryptodome==3.15.0
-    # via gradio
-pydantic==1.10.2
-    # via
-    #   fastapi
-    #   gradio
-pydub==0.25.1
-    # via gradio
 pygments==2.13.0
     # via
     #   -c requirements/prod.txt
-    #   colour-runner
     #   ipython
     #   jupyter-console
     #   nbconvert
     #   qtconsole
-    #   rootpath
-pynacl==1.5.0
-    # via paramiko
-pyngrok==5.1.0
-    # via -r requirements/dev.in
 pyparsing==3.0.9
     # via
     #   -c requirements/prod.txt
-    #   matplotlib
     #   packaging
-pyquaternion==0.9.9
-    # via open3d
 pyrsistent==0.18.1
     # via jsonschema
 python-dateutil==2.8.2
-    # via
-    #   analytics-python
-    #   jupyter-client
-    #   matplotlib
-    #   pandas
-python-multipart==0.0.5
-    # via gradio
-pytz==2022.4
-    # via pandas
+    # via jupyter-client
 pyyaml==6.0
-    # via
-    #   gradio
-    #   open3d
-    #   pre-commit
-    #   pyngrok
+    # via pre-commit
 pyzmq==24.0.1
     # via
     #   ipykernel
@@ -416,66 +229,18 @@ qtpy==2.2.1
 requests==2.28.1
     # via
     #   -c requirements/prod.txt
-    #   analytics-python
-    #   codecov
-    #   gradio
     #   torchvision
-rfc3986[idna2008]==1.5.0
-    # via httpx
-rootpath==0.1.1
-    # via
-    #   -c requirements/prod.txt
-    #   -r requirements/dev.in
-scikit-learn==1.0.2
-    # via
-    #   -c requirements/prod.txt
-    #   open3d
-    #   sklearn
-scipy==1.7.3
-    # via
-    #   -c requirements/prod.txt
-    #   -r requirements/dev.in
-    #   scikit-learn
 send2trash==1.8.0
     # via notebook
-shapely==1.8.4
-    # via
-    #   -c requirements/prod.txt
-    #   -r requirements/dev.in
 six==1.16.0
     # via
     #   -c requirements/prod.txt
-    #   analytics-python
     #   bleach
-    #   blessings
-    #   paramiko
     #   python-dateutil
-    #   python-multipart
-    #   rootpath
-    #   tox
-sklearn==0.0
-    # via
-    #   -c requirements/prod.txt
-    #   -r requirements/dev.in
-sniffio==1.3.0
-    # via
-    #   anyio
-    #   httpcore
-    #   httpx
 soupsieve==2.3.2.post1
     # via beautifulsoup4
-starlette==0.20.4
-    # via fastapi
-termcolor==2.0.1
-    # via
-    #   -c requirements/prod.txt
-    #   rootpath
 terminado==0.16.0
     # via notebook
-threadpoolctl==3.1.0
-    # via
-    #   -c requirements/prod.txt
-    #   scikit-learn
 tinycss2==1.1.1
     # via nbconvert
 toml==0.10.2
@@ -484,11 +249,9 @@ tomli==2.0.1
     # via
     #   -c requirements/prod.txt
     #   black
-    #   tox
 torch==1.12.1
     # via
     #   -c requirements/prod.txt
-    #   -r requirements/dev.in
     #   torchvision
 torchvision==0.13.1
     # via -r requirements/dev.in
@@ -498,14 +261,6 @@ tornado==6.2
     #   jupyter-client
     #   notebook
     #   terminado
-tox==3.26.0
-    # via
-    #   -c requirements/prod.txt
-    #   rootpath
-tqdm==4.64.1
-    # via
-    #   -r requirements/dev.in
-    #   open3d
 traitlets==5.4.0
     # via
     #   ipykernel
@@ -524,50 +279,30 @@ typed-ast==1.5.4
 typing-extensions==4.4.0
     # via
     #   -c requirements/prod.txt
-    #   aiohttp
-    #   anyio
     #   argon2-cffi
-    #   async-timeout
     #   black
     #   importlib-metadata
     #   jsonschema
-    #   kiwisolver
-    #   markdown-it-py
-    #   pydantic
-    #   starlette
     #   torch
     #   torchvision
-    #   uvicorn
-    #   yarl
-uc-micro-py==1.0.1
-    # via linkify-it-py
 urllib3==1.26.12
     # via
     #   -c requirements/prod.txt
     #   requests
-uvicorn==0.18.3
-    # via gradio
 virtualenv==20.16.5
     # via
     #   -c requirements/prod.txt
     #   pre-commit
-    #   tox
 wcwidth==0.2.5
     # via prompt-toolkit
 webencodings==0.5.1
     # via
     #   bleach
     #   tinycss2
-websockets==10.3
-    # via gradio
-wheel==0.37.1
-    # via open3d
 widgetsnbextension==4.0.3
     # via ipywidgets
 wincertstore==0.2
     # via -r requirements/dev.in
-yarl==1.8.1
-    # via aiohttp
 zipp==3.8.1
     # via
     #   -c requirements/prod.txt

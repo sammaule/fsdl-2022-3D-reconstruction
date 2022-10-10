@@ -1,5 +1,6 @@
 **/.DS_Store
 **/ngrok_auth.txt
+**/3D_object.obj
 flagged/
 # For this project
 horizon_net/ckpt/*

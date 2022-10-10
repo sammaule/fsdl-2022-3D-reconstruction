@@ -9,6 +9,9 @@ Also get the server port equal to some value e.g. 5000 otherwise it will default
 ```bash
 $ export LAMBDA_FUNCTION_URL=<insert lambda function url>
 $ export SERVER_PORT=5001
+
+# TODO explain this
+export PYTHONPATH="${PYTHONPATH}:/Users/smaule/Documents/VSCode/fsdl-2022-3D-reconstruction/"
 ```
 
 The frontend can then be viewed by running:
