@@ -44,16 +44,21 @@ class PredictorBackend:
 
         Returns
         -------
-        _type_
-            HorizonNet model prediction of the 3D layout.
+        str
+            Filepath containing mesh of HorizonNet 3D layout model prediction.
         """
+        logging.info(f"{type(image)}")
+        logging.info("Image received. Preprocessing...")
         processed_image = preprocess(image)
 
-        logging.info(f"Sending image to backend at {self.model_url}")
+        logging.info("Sending image AWS lambda function for processing...")
         response = send_images_to_aws_lambda(processed_image, self.model_url)
 
+        logging.info("Response received, converting image to mesh...")
         mesh = convert_to_3D(processed_image, response)
         o3d.io.write_triangle_mesh("3D_object.obj", mesh, write_triangle_uvs=True)
+
+        logging.info("Processing complete.")
         return "3D_object.obj"
 
 
