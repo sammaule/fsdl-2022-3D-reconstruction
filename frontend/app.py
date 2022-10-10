@@ -6,8 +6,9 @@ from pathlib import Path
 import gradio as gr
 import requests
 
-MODEL_URL = os.getenv("LAMBDA_FUNCTION_URL")
-SERVER_PORT = int(os.getenv("SERVER_PORT", 80))
+#MODEL_URL = os.getenv("LAMBDA_FUNCTION_URL") 
+MODEL_URL = 'https://vajhjo3km2a6bxoll4myhchgze0hucec.lambda-url.eu-west-2.on.aws/'
+SERVER_PORT = int(os.getenv("SERVER_PORT", 5001))
 
 
 def main(model_url):
