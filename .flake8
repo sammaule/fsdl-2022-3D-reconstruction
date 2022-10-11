@@ -31,6 +31,7 @@ per-file-ignores =
   */__init__.py:F401,I
   horizon_net/horizonnet_reconstruction.py:D301,W605,D400,W605,S108,S310,E203,D103
   model/app.py:D100,D103,ANN001,ANN201
+  horizon_net/skybox_grid.py:D100
 exclude =
   horizon_net/assets/*
   horizon_net/misc/*
