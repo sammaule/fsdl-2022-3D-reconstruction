@@ -1,10 +1,17 @@
 """Entrypoint for the frontend application. Users can provide a panorama image and returns a 3D layout."""
+import base64
+from io import BytesIO
+import json
 import logging
 import os
-from pathlib import Path
 
 import gradio as gr
+import open3d as o3d
 import requests
+
+from horizon_net.layout_viewer import convert_to_3D
+from horizon_net.preprocess import preprocess
+
 
 MODEL_URL = os.getenv("LAMBDA_FUNCTION_URL")
 SERVER_PORT = int(os.getenv("SERVER_PORT", 80))
@@ -40,21 +47,37 @@ class PredictorBackend:
         _type_
             HorizonNet model prediction of the 3D layout.
         """
+        processed_image = preprocess(image)
+
         logging.info(f"Sending image to backend at {self.model_url}")
-        pumpkin = str(Path(__file__).parent / "pumpkin.obj")
-        text = requests.get(self.model_url).text
-        return pumpkin, text
+        response = send_images_to_aws_lambda(processed_image, self.model_url)
+
+        mesh = convert_to_3D(processed_image, response)
+        o3d.io.write_triangle_mesh("3D_object.obj", mesh, write_triangle_uvs=True)
+        return "3D_object.obj"
+
+
+def send_images_to_aws_lambda(image, model_url):
+    """Send images (encode to b64) to aws lambda function."""
+    _buffer = BytesIO()  # bytes that live in memory
+    image.save(_buffer, format="png")  # but which we write to like a file
+    encoded_image = base64.b64encode(_buffer.getvalue()).decode("utf8")
+
+    headers = {"Content-type": "application/json"}
+    data = json.dumps({"image": "data:image/png;base64," + encoded_image})
+
+    response = requests.post(model_url, data=data, headers=headers)
+
+    return response.json()
 
 
 def make_frontend(fn):
     """Create the frontend for the application."""
     return gr.Interface(
         fn=fn,
+        examples=["frontend/demos/demo1.png", "frontend/demos/demo2.jpg"],
         inputs=gr.components.Image(type="pil", label="Panorama"),
-        outputs=[
-            gr.Model3D(clear_color=[0.0, 0.0, 0.0, 0.0], label="3D Layout"),
-            gr.Textbox(label="Text"),
-        ],
+        outputs=gr.Model3D(clear_color=[0.0, 0.0, 0.0, 0.0], label="3D Layout"),
         title="3D Reconstruction",
         allow_flagging="never",
     )

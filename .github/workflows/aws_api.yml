@@ -5,6 +5,8 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'model/*'
 
 env:
   AWS_REGION: eu-west-2

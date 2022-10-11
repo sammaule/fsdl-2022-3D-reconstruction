@@ -36,6 +36,7 @@ MODEL_URL = "https://horizonnetmodel.s3.eu-west-2.amazonaws.com/horizonNet.pt"
 
 
 def find_N_peaks(signal, r=29, min_v=0.05, N=None):
+    """Find N peaks."""
     max_v = maximum_filter(signal, size=r, mode="wrap")
     pk_loc = np.where(max_v == signal)[0]
     pk_loc = pk_loc[signal[pk_loc] > min_v]
@@ -117,8 +118,7 @@ class HorizonNet:
         if img_pil.size != (1024, 512):
             img_pil = img_pil.resize((1024, 512), Image.BICUBIC)
         img_ori = np.array(img_pil)[..., :3].transpose([2, 0, 1]).copy()
-        x = torch.FloatTensor([img_ori / 255])
-
+        x = torch.FloatTensor(np.array([img_ori / 255]))
         H, W = tuple(x.shape[2:])
 
         x, aug_type = augment(x, False, [])
@@ -183,6 +183,7 @@ class HorizonNet:
 
 
 def main():
+    """Use to call the module directly."""
     parser = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     parser.add_argument(
         "filename",

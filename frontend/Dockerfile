@@ -9,6 +9,8 @@ WORKDIR /repo
 
 # Install Python dependencies
 COPY requirements/prod_frontend.txt ./requirements.txt
+RUN apt-get update
+RUN apt-get install ffmpeg libsm6 libxext6  -y
 RUN pip install --upgrade pip==21.1.3
 RUN pip install -r requirements.txt
 ENV PYTHONPATH ".:"
@@ -20,5 +22,6 @@ ENV LAMBDA_FUNCTION_URL=$LAMBDA_FUNCTION_URL
 # Copy only the relevant directories
 #   note that we use a .dockerignore file to avoid copying logs etc.
 COPY frontend/ ./frontend
+COPY horizon_net/ ./horizon_net
 
 ENTRYPOINT ["python3", "frontend/app.py"]
