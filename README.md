@@ -1,8 +1,8 @@
-# :house: 3D reconstruction from panoramas (FSDL :pancakes: 2022)
+# :house: 3D room reconstruction from panoramic images (A FSDL 2022 project :pancakes:)
 
 ## About
 
-This repository contains code for a web app which creates 3D reconstructions of rooms from 2D panorama photos. The web app can be accessed HERE, where users can upload panorama images of a room. These images will be passed to a deployment of the [HorizonNet](https://sunset1995.github.io/HorizonNet/) model and will return a 3D reconstruction of the room.
+This repository contains code for a web app which creates 3D reconstructions of rooms from 2D panoramic photos. The web app can be accessed HERE, where users can upload panorama images of a room. These images will be passed to a deployment of the [HorizonNet](https://sunset1995.github.io/HorizonNet/) model and will return a 3D reconstruction of the room.
 
 ## Architecture
 
@@ -20,7 +20,7 @@ $ conda activate fsdl-3d-recon
 
 3. Install the required packages with pip-tools by running:
 ```bash
-make pip-tools
+$ make pip-tools
 ```
 
 To update packages in the conda environment edit `requirements/dev.in` or `requirements/prod.in` with the desired changes and rerun `make pip-tools`.
