@@ -9,12 +9,13 @@
 name: Publish Docker image
 
 # On any pull request where file in frontend/ folder changes
-on:
-  push:
-    branches:
-      - main
-    paths:
-      - 'frontend/*'
+on: push
+# on:
+#   push:
+#     branches:
+#       - main
+#     paths:
+#       - 'frontend/*'
 
 jobs:
   push_to_registry:

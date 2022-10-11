@@ -39,7 +39,7 @@ class PredictorBackend:
 
         Parameters
         ----------
-        image : _type_
+        image : PIL.Image.Image
             User uploaded image of a panorama.
 
         Returns
@@ -47,8 +47,7 @@ class PredictorBackend:
         str
             Filepath containing mesh of HorizonNet 3D layout model prediction.
         """
-        logging.info(f"{type(image)}")
-        logging.info("Image received. Preprocessing...")
+        logging.info(f"{type(image)} image received. Preprocessing...")
         processed_image = preprocess(image)
 
         logging.info("Sending image AWS lambda function for processing...")
