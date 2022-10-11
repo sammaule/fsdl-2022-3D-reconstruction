@@ -6,7 +6,7 @@ This repository contains code for a web app which creates 3D reconstructions of 
 
 ## Architecture
 
-![image](images/deployment_architecture.jpeg)
+![image](assets/deployment_architecture.jpeg)
 
 ## :wrench: Developer setup
 
