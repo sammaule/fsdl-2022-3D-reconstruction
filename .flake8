@@ -15,7 +15,7 @@ application-import-names = horizon_net
 import-order-style = google
   # flake8-import-order: which import order style guide do we use?
 docstring-convention = numpy
-  # flake8-docstrings: whch docstring style guide do we use?
+  # flake8-docstrings: which docstring style guide do we use?
 strictness = short
   # darglint: how "strict" are we with docstring completeness?
 docstring-style = numpy
