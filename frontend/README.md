@@ -4,7 +4,7 @@ Follow the instructions in the main README.md to activate the conda environment 
 
 To run the frontend locally, define a few environment variables.
 1. LAMBDA_FUNCTION_URL -> URL to send requests to the HorizonNet model.
-2. SERVER_PORT -> a port available on your local machine. 
+2. SERVER_PORT -> a port available on your local machine.
 3. PYTHONPATH -> Add the repo folder location to your python path
 
 For example:

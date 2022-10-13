@@ -39,21 +39,25 @@ class PredictorBackend:
 
         Parameters
         ----------
-        image : _type_
+        image : PIL.Image.Image
             User uploaded image of a panorama.
 
         Returns
         -------
-        _type_
-            HorizonNet model prediction of the 3D layout.
+        str
+            Filepath containing mesh of HorizonNet 3D layout model prediction.
         """
+        logging.info(f"{type(image)} image received. Preprocessing...")
         processed_image = preprocess(image)
 
-        logging.info(f"Sending image to backend at {self.model_url}")
+        logging.info("Sending image AWS lambda function for processing...")
         response = send_images_to_aws_lambda(processed_image, self.model_url)
 
+        logging.info("Response received, converting image to mesh...")
         mesh = convert_to_3D(processed_image, response)
         o3d.io.write_triangle_mesh("3D_object.obj", mesh, write_triangle_uvs=True)
+
+        logging.info("Processing complete.")
         return "3D_object.obj"
 
 
@@ -78,7 +82,9 @@ def make_frontend(fn):
         examples=["frontend/demos/demo1.png", "frontend/demos/demo2.jpg"],
         inputs=gr.components.Image(type="pil", label="Panorama"),
         outputs=gr.Model3D(clear_color=[0.0, 0.0, 0.0, 0.0], label="3D Layout"),
-        title="3D Reconstruction",
+        title="🏠 3D Room Reconstruction",
+        description="This demo uses HorizonNet to create 3D room reconstructions from 2D panorama images.",
+        article="A 2022 FSDL project 🥞",
         allow_flagging="never",
     )
 
