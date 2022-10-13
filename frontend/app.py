@@ -128,9 +128,14 @@ def make_frontend(model_url):
         with gr.Tab("Predict Panorama"):
             with gr.Row():
                 image_input = gr.Image(type="pil", label="Panorama")
-                image_output = gr.Model3D(
+                image_output_tab1 = gr.Model3D(
                     clear_color=[0.0, 0.0, 0.0, 0.0], label="3D Layout"
                 )
+            gr.Examples(
+                examples=[["frontend/demos/demo1.png"], ["frontend/demos/demo2.jpg"]],
+                inputs=image_input,
+                outputs=image_output_tab1,
+            )
             image_button = gr.Button("Reconstruct 3D Layout")
         with gr.Tab("Predict Multiple Images"):
             with gr.Row():
@@ -140,17 +145,32 @@ def make_frontend(model_url):
                 image_3 = gr.components.Image(type="pil", label="Skybox_3")
                 image_4 = gr.components.Image(type="pil", label="Skybox_4")
                 image_5 = gr.components.Image(type="pil", label="Skybox_5")
-                image_output = gr.Model3D(
-                    clear_color=[0.0, 0.0, 0.0, 0.0], label="3D Layout"
-                )
-
+            image_output_tab2 = gr.Model3D(
+                clear_color=[0.0, 0.0, 0.0, 0.0], label="3D Layout"
+            )
+            gr.Examples(
+                examples=[
+                    [
+                        "frontend/demos/skybox0.jpg",
+                        "frontend/demos/skybox1.jpg",
+                        "frontend/demos/skybox2.jpg",
+                        "frontend/demos/skybox3.jpg",
+                        "frontend/demos/skybox4.jpg",
+                        "frontend/demos/skybox5.jpg",
+                    ]
+                ],
+                inputs=[image_0, image_1, image_2, image_3, image_4, image_5],
+                outputs=image_output_tab2,
+            )
             image_button_multiple = gr.Button("Reconstruct 3D Layout")
 
-        image_button.click(predictor.predict, inputs=image_input, outputs=image_output)
+        image_button.click(
+            predictor.predict, inputs=image_input, outputs=image_output_tab1
+        )
         image_button_multiple.click(
             predictor.predict_multiple_images,
             inputs=[image_0, image_1, image_2, image_3, image_4, image_5],
-            outputs=image_output,
+            outputs=image_output_tab2,
         )
 
     return demo
