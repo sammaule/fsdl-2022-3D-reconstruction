@@ -57,14 +57,17 @@ class PredictorBackend:
         str
             Filepath containing mesh of HorizonNet 3D layout model prediction.
         """
+        logging.info("Images received. Preprocessing...")
         panorama_image = create_skybox([left, top, bottom, right, back, front])
         # panorama_image.save('tmp/test_panp.png', format="PNG")
         processed_image = preprocess(panorama_image)
         logging.info(f"Sending image to backend at {self.model_url}")
         response = send_images_to_aws_lambda(processed_image, self.model_url)
 
+        logging.info("Response received, converting image to mesh...")
         mesh = convert_to_3D(processed_image, response)
         o3d.io.write_triangle_mesh("3D_object.obj", mesh, write_triangle_uvs=True)
+        logging.info("Processing complete.")
         return "3D_object.obj"
 
     def predict(self, image):
