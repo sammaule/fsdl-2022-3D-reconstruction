@@ -8,17 +8,14 @@ import os
 import gradio as gr
 import open3d as o3d
 import requests
-import rootpath
-
-MODEL_URL = os.getenv("LAMBDA_FUNCTION_URL")
-SERVER_PORT = int(os.getenv("SERVER_PORT", 5001))
-
-
-os.chdir(rootpath.append()[-1])
 
 from horizon_net.layout_viewer import convert_to_3D
 from horizon_net.preprocess import preprocess
 from horizon_net.skybox_grid import create_skybox
+
+
+MODEL_URL = os.getenv("LAMBDA_FUNCTION_URL")
+SERVER_PORT = int(os.getenv("SERVER_PORT", 80))
 
 
 def main(model_url):
@@ -76,21 +73,25 @@ class PredictorBackend:
 
         Parameters
         ----------
-        image : _type_
+        image : PIL.Image.Image
             User uploaded image of a panorama.
 
         Returns
         -------
-        _type_
-            HorizonNet model prediction of the 3D layout.
+        str
+            Filepath containing mesh of HorizonNet 3D layout model prediction.
         """
+        logging.info(f"{type(image)} image received. Preprocessing...")
         processed_image = preprocess(image)
 
-        logging.info(f"Sending image to backend at {self.model_url}")
+        logging.info("Sending image AWS lambda function for processing...")
         response = send_images_to_aws_lambda(processed_image, self.model_url)
 
+        logging.info("Response received, converting image to mesh...")
         mesh = convert_to_3D(processed_image, response)
         o3d.io.write_triangle_mesh("3D_object.obj", mesh, write_triangle_uvs=True)
+
+        logging.info("Processing complete.")
         return "3D_object.obj"
 
 
