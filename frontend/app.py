@@ -54,8 +54,8 @@ class PredictorBackend:
 
         Returns
         -------
-        _type_
-            HorizonNet model prediction of the 3D layout.
+        str
+            Filepath containing mesh of HorizonNet 3D layout model prediction.
         """
         panorama_image = create_skybox([left, top, bottom, right, back, front])
         # panorama_image.save('tmp/test_panp.png', format="PNG")
@@ -123,9 +123,12 @@ def make_frontend(model_url):
         Gradio Frontend Blocks
     """
     predictor = PredictorBackend(model_url)
-    """Create the frontend for the application."""
+
     with gr.Blocks() as demo:
-        gr.Markdown("Flip text or image files using this demo.")
+        gr.Markdown("# 🏠 3D Room Reconstruction")
+        gr.Markdown(
+            "This demo uses HorizonNet to create 3D room reconstructions from 2D panorama images or from multiple individual images."
+        )
         with gr.Tab("Predict Panorama"):
             with gr.Row():
                 image_input = gr.Image(type="pil", label="Panorama")
@@ -164,7 +167,7 @@ def make_frontend(model_url):
                 outputs=image_output_tab2,
             )
             image_button_multiple = gr.Button("Reconstruct 3D Layout")
-
+        gr.Markdown("An FSDL 🥞 production.")
         image_button.click(
             predictor.predict, inputs=image_input, outputs=image_output_tab1
         )
